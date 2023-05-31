@@ -43,7 +43,7 @@ interface CardProps {
 
 function Card({ book }: CardProps) {
   return (
-    <div className="bg-white p-4 shadow-md mx-1">
+    <div className="bg-white p-4 shadow-md mx-1 rounded-md">
       <p className="text-sm font-semibold mb-2 h-9">{book.title}</p>
       <p className="text-xs line-clamp-3 mb-4">{book.description}</p>
       <Link

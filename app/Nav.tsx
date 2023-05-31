@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineMail, AiOutlineUser } from "react-icons/ai";
+import Searchbar from "./Searchbar";
 
 export default function Nav() {
   return (
     <nav className="w-full py-4">
-      <div className="max-w-screen-lg m-auto max-lg:px-4 flex items-center justify-between">
+      <div className=" max-w-screen-lg m-auto max-lg:px-4 grid grid-cols-2 grid-rows-2  lg:flex lg:items-center lg:justify-between ">
         <Link
           className=" block w-fit"
           title="lar fraterno de cambinda"
@@ -17,7 +18,7 @@ export default function Nav() {
               width={200}
               height={200}
               src={"/images/larFraternoIconBlack.png"}
-              className="logo w-16"
+              className="logo w-12 sm:w-16"
             />
             <p className="text-xs max-w-[100px] text-center font-semibold leading-none">
               Lar Fraterno de Cambinda
@@ -25,20 +26,24 @@ export default function Nav() {
           </div>
         </Link>
 
-        <div className="flex items-center justify-between">
+        <div className="order-last lg:order-none col-span-full lg:flex-1 flex items-center justify-center h-fit mt-4">
+          <Searchbar />
+        </div>
+
+        <div className="flex-col items-end sm:flex-row flex sm:items-center lg:justify-between justify-end">
           <a
-            className="text-sm hover:underline flex items-center gap-1"
+            className="text-xs sm:text-sm hover:underline flex items-center gap-1 w-fit"
             href="mailto:lardecambinda@gmail.com"
           >
-            <AiOutlineMail className="text-xl" />
+            <AiOutlineMail className="sm:text-xl" />
             lardecambinda@gmail.com
           </a>
 
           <Link
-            className="text-sm hover:underline flex items-center gap-1 ml-2 border-l border-light-black pl-2"
+            className="text-xs sm:text-sm hover:underline flex items-center gap-1 ml-2 sm:border-l sm:border-light-black pl-2"
             href={"/admin"}
           >
-            <AiOutlineUser className="text-xl" />
+            <AiOutlineUser className="sm:text-xl" />
             Admin
           </Link>
         </div>
