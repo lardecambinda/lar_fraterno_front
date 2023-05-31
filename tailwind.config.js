@@ -17,9 +17,14 @@ module.exports = {
         "light-black": "var(--black)",
         background: "var(--background)",
         accent: "var(--secondary)",
+        violet: "var(--violet)",
       },
       borderColor: {
         "light-black": "var(--black)",
+      },
+      backgroundColor: {
+        violet: "var(--violet)",
+        accent: "var(--secondary)",
       },
     },
   },

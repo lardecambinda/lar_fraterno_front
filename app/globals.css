@@ -11,6 +11,7 @@
   --background: #f5e5fc;
   --black: #272932;
   --secondary: #9d69a3;
+  --violet: #D6BFD5
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -24,9 +25,10 @@
 body {
   min-height: 100vh;
   color: rgb(var(--foreground-rgb));
-  background-color: var(--background);
+  background: linear-gradient(to bottom,var(--violet), var(--background));
 }
 
 .logo{
   filter: brightness(0) saturate(100%) invert(13%) sepia(9%) saturate(1095%) hue-rotate(191deg) brightness(97%) contrast(91%);
 }
+
