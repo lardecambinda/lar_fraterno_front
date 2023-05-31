@@ -14,7 +14,7 @@ export default function Home() {
       </div>
 
       <section className="mt-20">
-        <h2 className="text-center max-w-sm m-auto text-xl font-semibold leading-none ">
+        <h2 className="text-center max-w-sm m-auto text-2xl font-semibold leading-none ">
           Conheça as Obras Básicas do Espiritismo
         </h2>
 
