@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --accent: #D6BFD5;
+  --background: #272932;
+  --white: white;
+}
+
+body {
+    min-height: 100vh;
+    color: rgb(var(--foreground-rgb));
+    background: var(--background);
+  }
+  
+  .logo{
+    filter: brightness(0) saturate(100%) invert(96%) sepia(97%) saturate(12%) hue-rotate(237deg) brightness(103%) contrast(103%);
+  }
