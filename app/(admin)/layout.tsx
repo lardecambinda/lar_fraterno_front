@@ -1,6 +1,7 @@
 import "../admin.css";
 import { Montserrat } from "next/font/google";
 import AdminHeader from "./AdminHeader";
+import AdminNav from "./AdminNav";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -32,10 +33,15 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
         />
       </head>
-      <body className={montserrat.className}>
-        <AdminHeader />
-        <div className="text-white">
-          <div className="max-w-screen-lg m-auto max-lg:px-4">{children}</div>
+      <body
+        className={`${montserrat.className} flex items-start justify-start `}
+      >
+        <AdminNav />
+        <div className="flex-1 h-full px-4">
+          <AdminHeader />
+          <div className="text-light-black">
+            <div className="max-lg:px-4">{children}</div>
+          </div>
         </div>
       </body>
     </html>

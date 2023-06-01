@@ -3,17 +3,27 @@
 @tailwind utilities;
 
 :root{
-  --accent: #D6BFD5;
-  --background: #272932;
+  --violet: #D6BFD5; 
+  --black: #272930;
   --white: white;
+  --background-light: #fdf7ff;
 }
 
 body {
     min-height: 100vh;
+    height: 100vh;
     color: rgb(var(--foreground-rgb));
-    background: var(--background);
+    background: var(--background-light);
   }
   
+
+  /* white */
   .logo{
     filter: brightness(0) saturate(100%) invert(96%) sepia(97%) saturate(12%) hue-rotate(237deg) brightness(103%) contrast(103%);
   }
+
+
+  /* black */
+  /* .logo{
+    filter: brightness(0) saturate(100%) invert(13%) sepia(9%) saturate(1095%) hue-rotate(191deg) brightness(97%) contrast(91%);
+  } */

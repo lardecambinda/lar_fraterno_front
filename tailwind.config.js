@@ -25,6 +25,7 @@ module.exports = {
       backgroundColor: {
         violet: "var(--violet)",
         accent: "var(--secondary)",
+        "light-black": "var(--black)",
       },
     },
   },
