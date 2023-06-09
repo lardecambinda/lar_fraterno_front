@@ -37,7 +37,7 @@ export default function Page() {
             </div>
           ) : (
             results?.map((post) => {
-              return <div>{post.title}</div>;
+              return <div key={post.id}>{post.title}</div>;
             })
           )}
         </div>
