@@ -1,6 +1,6 @@
 import "../globals.css";
 import { Montserrat } from "next/font/google";
-
+import SearchContextProvider from "@/contexts/searchContext";
 import Nav from "./Nav";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
@@ -33,12 +33,14 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
         />
       </head>
-      <body className={montserrat.className}>
-        <div className="text-light-black">
-          <Nav />
-          <div className="max-w-screen-lg m-auto max-lg:px-4">{children}</div>
-        </div>
-      </body>
+      <SearchContextProvider>
+        <body className={montserrat.className}>
+          <div className="text-light-black">
+            <Nav />
+            <div className="max-w-screen-lg m-auto max-lg:px-4">{children}</div>
+          </div>
+        </body>
+      </SearchContextProvider>
     </html>
   );
 }

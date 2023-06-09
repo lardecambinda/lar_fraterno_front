@@ -19,6 +19,7 @@ export default function Nav() {
               height={200}
               src={"/images/larFraternoIconBlack.png"}
               className="logo w-12 sm:w-16"
+              priority
             />
             <p className="text-xs max-w-[100px] text-center font-semibold leading-none">
               Lar Fraterno de Cambinda

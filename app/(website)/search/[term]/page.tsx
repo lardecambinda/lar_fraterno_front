@@ -1,48 +1,19 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import { formatTerm } from "@/utils/formatSearchTerm";
-import { Post } from "@/types/types";
+import useSearch from "@/hooks/useSearch";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
-  const params = useParams();
-  const [results, setResults] = useState<Post[]>();
+  const { results, term } = useSearch();
+  const [searchTerm, setSearchTerm] = useState(term);
+  const router = useRouter();
 
   useEffect(() => {
-    console.log(decodeURIComponent(params.term));
-
-    getSearch(decodeURIComponent(params.term));
-  }, []);
-
-  useEffect(() => {
-    console.log(results);
-  }, [results]);
-
-  const getSearch = async (term: string) => {
-    if (!term) {
-      return;
+    if (term == "") {
+      router.push("/");
     }
-
-    console.log(term);
-    console.log(
-      `${process.env.NEXT_PUBLIC_API_BASE_ROUTE as string}/search/${term}`
-    );
-
-    // Waiting for auth functionality
-
-    // const req = await fetch(
-    //   `${process.env.NEXT_PUBLIC_API_BASE_ROUTE as string}/search/${term}`
-    // );
-
-    // if (!req.ok) {
-    //   return console.log("Error");
-    // }
-
-    // const data = await req.json();
-    // console.log(data.posts);
-
-    // setResults(data.posts);
-  };
+  }, []);
 
   return (
     <div>
@@ -50,9 +21,26 @@ export default function Page() {
         <h1>
           Busca por{" "}
           <strong className="text-xl">
-            {decodeURIComponent(formatTerm(params.term))}
+            {decodeURIComponent(formatTerm(searchTerm))}
           </strong>
         </h1>
+      </div>
+
+      <div>
+        <div>
+          {results == undefined ? (
+            <div>Loading...</div>
+          ) : results.length < 1 ? (
+            <div className="w-full h-96 flex items-center justify-center gap-1">
+              Sem resultados para
+              <strong> {decodeURIComponent(formatTerm(searchTerm))}</strong>
+            </div>
+          ) : (
+            results?.map((post) => {
+              return <div>{post.title}</div>;
+            })
+          )}
+        </div>
       </div>
     </div>
   );

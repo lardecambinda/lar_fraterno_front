@@ -4,11 +4,12 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { formatParam } from "@/utils/formatSearchTerm";
+import useSearch from "@/hooks/useSearch";
 
 export default function Searchbar() {
   const router = useRouter();
 
-  const [term, setTerm] = useState<string>("");
+  const { updateTerm, term, getSearch } = useSearch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -16,6 +17,8 @@ export default function Searchbar() {
     if (term == "") {
       return;
     }
+
+    getSearch(term);
 
     router.push(`/search/${formatParam(term)}`);
   };
@@ -29,7 +32,8 @@ export default function Searchbar() {
         placeholder="buscar..."
         className="flex-1 rounded-sm outline-none placeholder:text-sm"
         type="text"
-        onChange={(e) => setTerm(e.target.value)}
+        onChange={(e) => updateTerm(e.target.value)}
+        value={term}
       />
       <button>
         <AiOutlineSearch />
