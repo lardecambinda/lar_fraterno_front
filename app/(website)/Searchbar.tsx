@@ -2,8 +2,12 @@
 
 import { AiOutlineSearch } from "react-icons/ai";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { formatParam } from "@/utils/formatSearchTerm";
 
 export default function Searchbar() {
+  const router = useRouter();
+
   const [term, setTerm] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -13,7 +17,7 @@ export default function Searchbar() {
       return;
     }
 
-    console.log(term);
+    router.push(`/search/${formatParam(term)}`);
   };
 
   return (

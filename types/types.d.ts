@@ -2,11 +2,15 @@ export interface Post {
   title: string;
   content: string;
   files: string[];
-  user_id: string;
+  author_id: string;
   date: string;
   CreatedAt: string;
-  categories: string[];
   tags: string[];
+  author?: {
+    username: string;
+    email: string;
+    role: string;
+  };
 }
 
 export interface Book {
