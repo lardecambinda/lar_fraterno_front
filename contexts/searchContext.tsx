@@ -1,10 +1,10 @@
 "use client";
 
-import { Post } from "@/types/types";
+import { IPost } from "@/types/types";
 import { createContext, useState } from "react";
 
 interface ContextType {
-  results: Post[] | undefined;
+  results: IPost[] | undefined;
   getSearch: (term: string) => void;
   term: string;
   updateTerm: (str: string) => void;
@@ -17,7 +17,7 @@ interface Props {
 export const SearchContext = createContext({} as ContextType);
 
 export default function SearchContextProvider({ children }: Props) {
-  const [results, setResults] = useState<Post[] | undefined>();
+  const [results, setResults] = useState<IPost[] | undefined>();
   const [term, setTerm] = useState("");
 
   const getSearch = async (term: string) => {

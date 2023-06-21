@@ -1,21 +1,30 @@
-export interface Post {
+export interface IPost {
   id: number;
   title: string;
   content: string;
   files: string[];
-  author_id: string;
+  author_id: number;
   date: string;
-  CreatedAt: string;
+  createdAt: string;
   tags: string[];
-  author?: {
-    username: string;
-    email: string;
-    role: string;
-  };
+  author?: IUser;
 }
 
-export interface Book {
+export interface IBook {
   title: string;
   description: string;
   link: string;
+}
+
+export interface IUser {
+  id: number;
+  email: string;
+  username: string;
+  role: string;
+  posts?: IPost[];
+}
+
+export interface ILoginData {
+  email: string;
+  password: string;
 }

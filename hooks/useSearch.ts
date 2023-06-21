@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchContext } from "@/contexts/searchContext";
+import { SearchContext } from "@/contexts/SearchContext";
 import { useContext } from "react";
 
 export default function useSearch() {

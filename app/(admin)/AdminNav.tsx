@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function AdminNav() {
   return (
-    <div className="bg-light-black h-full p-4">
+    <div className="bg-light-black  p-4 fixed w-full bottom-0 md:h-full md:w-auto">
       <div>
         <div>
           <Link
@@ -17,9 +17,10 @@ export default function AdminNav() {
                 width={200}
                 height={200}
                 src={"/images/larFraternoIconBlack.png"}
-                className="logo w-12 sm:w-16"
+                className="logo w-9 md:w-12 sm:w-16 "
+                priority
               />
-              <p className="text-xs max-w-[100px] text-center font-semibold leading-none text-white">
+              <p className="text-[10px] md:text-xs max-w-[100px] text-center font-semibold leading-none text-white">
                 Lar Fraterno de Cambinda
               </p>
             </div>

@@ -1,6 +1,6 @@
 type Props = {
   title: string;
-  number: number;
+  number?: number;
   Icon: JSX.Element;
 };
 export default function Infocard({ title, number, Icon }: Props) {
@@ -13,7 +13,7 @@ export default function Infocard({ title, number, Icon }: Props) {
           </div>
           <p className="text-xl font-semibold ">{title}</p>
         </div>
-        <p className="text-3xl font-bold ml-4">{number}</p>
+        <p className="text-3xl font-bold ml-4">{number ? number : 0}</p>
       </div>
     </div>
   );
