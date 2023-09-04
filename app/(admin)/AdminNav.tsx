@@ -28,7 +28,9 @@ export default function AdminNav() {
         </div>
 
         <div>
-          <ul>{/* list */}</ul>
+          <ul>
+            <li></li>
+          </ul>
         </div>
       </div>
     </div>

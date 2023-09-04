@@ -5,7 +5,7 @@ export default function AdminHeader() {
   const { user } = useAuth();
   return (
     <header className="py-6  w-full ">
-      <div className="max-lg:px-4">Olá, {user?.username}</div>
+      <div className="max-lg:px-4">Olá, {user?.user_name}</div>
     </header>
   );
 }

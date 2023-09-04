@@ -1,7 +1,7 @@
 import { IPost } from "@/types/types";
 import formatCreatedAt from "@/utils/formatCreatedAt";
 import { useEffect } from "react";
-import { SlDocs } from "react-icons/sl";
+import { Files } from "lucide-react";
 
 interface IProps {
   posts: IPost[];
@@ -18,7 +18,7 @@ export default function PostsContainer({ posts }: IProps) {
     <div className="md:h-[500px] w-full">
       <div className="flex items-center mb-4 gap-2 ">
         <div className="p-2 bg-violet rounded-full ">
-          <SlDocs className="text-xl" />
+          <Files strokeWidth={1.5} color="#272932" />
         </div>
         <h2 className="font-semibold text-lg ">Todas as Publicações</h2>
       </div>

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { AiOutlineMail, AiOutlineUser } from "react-icons/ai";
 import Searchbar from "./Searchbar";
+import { Mail, User } from "lucide-react";
 
 export default function Nav() {
   return (
@@ -36,7 +36,7 @@ export default function Nav() {
             className="text-xs sm:text-sm hover:underline flex items-center gap-1 w-fit"
             href="mailto:lardecambinda@gmail.com"
           >
-            <AiOutlineMail className="sm:text-xl" />
+            <Mail size={16} strokeWidth={1.5} />
             lardecambinda@gmail.com
           </a>
 
@@ -44,7 +44,7 @@ export default function Nav() {
             className="text-xs sm:text-sm hover:underline flex items-center gap-1 ml-2 sm:border-l sm:border-light-black pl-2"
             href={"/admin"}
           >
-            <AiOutlineUser className="sm:text-xl" />
+            <User size={16} strokeWidth={1.5} />
             Admin
           </Link>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { AiOutlineSearch } from "react-icons/ai";
+import { Search } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { formatParam } from "@/utils/formatSearchTerm";
@@ -36,7 +36,7 @@ export default function Searchbar() {
         value={term}
       />
       <button>
-        <AiOutlineSearch />
+        <Search color="#272932" strokeWidth={1.5} />
       </button>
     </form>
   );
