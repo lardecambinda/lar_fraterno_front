@@ -1,4 +1,5 @@
 import "../admin.css";
+
 import { Montserrat } from "next/font/google";
 import AdminHeader from "./AdminHeader";
 import AdminNav from "./AdminNav";
@@ -32,6 +33,14 @@ export default function RootLayout({
           rel="stylesheet"
           type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/react-quill@1.3.3/dist/quill.snow.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/react-quill@1.3.3/dist/quill.bubble.css"
         />
       </head>
       <AuthContextProvider>

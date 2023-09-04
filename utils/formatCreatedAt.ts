@@ -1,4 +1,8 @@
 export default function formatCreatedAt(createdAt: string) {
+  if (!createdAt) {
+    return;
+  }
+
   const [date, time] = createdAt.split("T");
 
   const [year, month, day] = date.split("-");

@@ -8,8 +8,14 @@ interface IProps {
 }
 
 export default function PostsContainer({ posts }: IProps) {
+  useEffect(() => {
+    posts.forEach((post) => {
+      console.log(post);
+    });
+  }, [posts]);
+
   return (
-    <div className="md:h-[500px]">
+    <div className="md:h-[500px] w-full">
       <div className="flex items-center mb-4 gap-2 ">
         <div className="p-2 bg-violet rounded-full ">
           <SlDocs className="text-xl" />
@@ -27,12 +33,19 @@ export default function PostsContainer({ posts }: IProps) {
                 key={post.id}
                 className="mb-2 pb-4 px-1 border-b last-of-type:border-none"
               >
-                <h3 className="font-semibold mb-1">{post.title}</h3>
+                <h3 className="font-semibold text-sm">{post.title}</h3>
                 <p className="line-clamp-2 text-sm">{post.content}</p>
 
                 <div className="mt-2">
                   <p className="text-xs text-gray-500">
                     {formatCreatedAt(post.createdAt)}
+                  </p>
+
+                  <p className="text-xs">
+                    Created by{" "}
+                    <span className="font-semibold">
+                      {post.users.user_name}
+                    </span>
                   </p>
                 </div>
               </div>

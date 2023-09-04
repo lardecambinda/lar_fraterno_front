@@ -1,13 +1,15 @@
 export interface IPost {
-  id: number;
+  id: string;
   title: string;
   content: string;
   files: string[];
-  author_id: number;
+  user_id: string;
   date: string;
   createdAt: string;
+  updatedAt: string;
   tags: string[];
   author?: IUser;
+  users: { user_id: string; user_name: string };
 }
 
 export interface IBook {
@@ -17,9 +19,9 @@ export interface IBook {
 }
 
 export interface IUser {
-  id: number;
+  id: string;
   email: string;
-  username: string;
+  user_name: string;
   role: string;
   posts?: IPost[];
 }

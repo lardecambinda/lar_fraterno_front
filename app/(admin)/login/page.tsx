@@ -13,12 +13,14 @@ export default function page() {
   const { user, signIn } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    const { "lar-fraterno_token": token } = parseCookies();
-    if (token) {
-      router.push("/admin");
-    }
-  }, []);
+  // Restrict Route
+
+  // useEffect(() => {
+  //   const { "lar-fraterno_token": token } = parseCookies();
+  //   if (token) {
+  //     router.push("/admin");
+  //   }
+  // }, []);
 
   const handleLogin = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();

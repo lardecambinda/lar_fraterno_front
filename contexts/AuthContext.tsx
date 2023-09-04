@@ -20,13 +20,13 @@ export default function AuthContextProvider({ children }: IProps) {
 
   const router = useRouter();
 
-  useEffect(() => {
-    const { "lar-fraterno_token": token } = parseCookies();
+  // useEffect(() => {
+  //   const { "lar-fraterno_token": token } = parseCookies();
 
-    if (token) {
-      getMe(token);
-    }
-  }, []);
+  //   if (token) {
+  //     getMe(token);
+  //   }
+  // }, []);
 
   const getMe = async (token: string) => {
     const resp = await fetch(
