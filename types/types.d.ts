@@ -30,3 +30,15 @@ export interface ILoginData {
   email: string;
   password: string;
 }
+
+export interface ICreatePost {
+  title: string;
+  content: string;
+}
+
+export interface ITokenData {
+  exp: number;
+  iat: number;
+  id: string;
+  role: "ADMIN" | "USER";
+}

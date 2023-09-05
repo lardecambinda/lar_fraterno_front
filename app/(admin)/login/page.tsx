@@ -44,7 +44,7 @@ export default function page() {
               Email:
             </label>
             <input
-              className="w-full border h-11 px-2 outline-none focus:border-gray-800"
+              className=" placeholder:text-sm w-full border h-11 px-2 outline-none focus:border-gray-800"
               name="email"
               type="email"
               placeholder="Digite seu e-mail"
@@ -58,7 +58,7 @@ export default function page() {
               Senha:
             </label>
             <input
-              className="w-full  border h-11 px-2 outline-none focus:border-gray-800"
+              className=" placeholder:text-sm w-full  border h-11 px-2 outline-none focus:border-gray-800"
               name="password"
               type="password"
               placeholder="Digite sua senha"
@@ -69,7 +69,7 @@ export default function page() {
           </div>
           <button
             title="Entrar"
-            className="bg-light-black text-white font-semibold h-11"
+            className="bg-light-black text-white font-semibold h-11 "
             onClick={(e) => handleLogin(e)}
           >
             Entrar

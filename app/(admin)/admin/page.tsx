@@ -19,10 +19,10 @@ export default function page() {
 
   useEffect(() => {
     // Restrict Route
-    // const { "lar-fraterno_token": token } = parseCookies();
-    // if (!token) {
-    //   router.push("/login");
-    // }
+    const { "lar-fraterno_token": token } = parseCookies();
+    if (!token) {
+      router.push("/login");
+    }
 
     getPosts().then((data) => setPosts(data as IPost[]));
     getUsers().then((data) => setUsers(data));
@@ -76,7 +76,7 @@ export default function page() {
         />
       </div>
       <div className="flex mt-4 p-4 bg-white shadow-md rounded-md ">
-        <PostsContainer posts={posts} />
+        {/* <PostsContainer posts={posts} /> */}
       </div>
     </div>
   );

@@ -1,27 +1,17 @@
+import { ICreatePost, ILoginData } from "@/types/types";
+
+import { api } from "./apolloAPIConfig";
+
 export const getUsers = async () => {
   // if (!token) {
   //   return console.log("Not logged in...");
   // }
 
-  const resp = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_ROUTE}/user/list`,
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-type": "application/json",
-        //   Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  if (!resp.ok) {
-    return console.log("Error...");
+  try {
+    return (await api.get("/user/list")).data;
+  } catch (error: any) {
+    throw new Error(error);
   }
-
-  const data = await resp.json();
-
-  return data;
 };
 
 export const getPosts = async () => {
@@ -29,23 +19,33 @@ export const getPosts = async () => {
   //   return console.log("Not logged in...");
   // }
 
-  const resp = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_ROUTE}/post/list`,
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-type": "application/json",
-        //   Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  if (!resp.ok) {
-    return console.log("Error...");
+  try {
+    return (await api.get("/post/list")).data;
+  } catch (error: any) {
+    throw new Error(error);
   }
+};
 
-  const data = await resp.json();
+export const createPost = async ({ title, content }: ICreatePost) => {
+  try {
+    return (await api.post("/post/create", { post: { title, content } })).data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
 
-  return data;
+export const signInRequest = async ({ email, password }: ILoginData) => {
+  try {
+    return (await api.post("/auth", { user: { email, password } })).data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const getUserById = async (id: string) => {
+  try {
+    return (await api.get(`/user/${id}`)).data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
 };

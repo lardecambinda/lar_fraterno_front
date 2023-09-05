@@ -1,8 +1,12 @@
 "use client";
-import { ILoginData, IUser } from "@/types/types";
+import { ILoginData, ITokenData, IUser } from "@/types/types";
 import { createContext, useState, useEffect } from "react";
-import { setCookie, parseCookies } from "nookies";
+import { setCookie, parseCookies, destroyCookie } from "nookies";
 import { useRouter } from "next/navigation";
+import { getUserById, signInRequest } from "@/services/apolloAPI";
+import * as jwt from "jsonwebtoken";
+import checkTokenExpired from "@/utils/checkTokenExpired";
+import { usePathname } from "next/navigation";
 
 interface IAuthContext {
   user: IUser | null;
@@ -19,35 +23,35 @@ export default function AuthContextProvider({ children }: IProps) {
   const [user, setUser] = useState<IUser | null>(null);
 
   const router = useRouter();
+  const pathname = usePathname();
 
-  // useEffect(() => {
-  //   const { "lar-fraterno_token": token } = parseCookies();
+  useEffect(() => {
+    const { "lar-fraterno_token": token } = parseCookies();
 
-  //   if (token) {
-  //     getMe(token);
-  //   }
-  // }, []);
-
-  const getMe = async (token: string) => {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_ROUTE}/users/me`,
-      {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    if (!resp.ok) {
-      return console.log(resp);
+    if (!token) {
+      return router.push("/login");
     }
 
-    const data = await resp.json();
+    const tokenDecoded = jwt.decode(token) as ITokenData;
+    const expired = checkTokenExpired(tokenDecoded.exp);
 
-    setUser(data.user);
+    if (expired) {
+      console.log("token expired");
+
+      destroyCookie(undefined, "lar-fraterno_token");
+
+      return router.push("/login");
+    } else {
+      const userId = tokenDecoded.id;
+      getMe(userId);
+
+      router.push(pathname);
+    }
+  }, []);
+
+  const getMe = async (id: string) => {
+    const user = (await getUserById(id)) as IUser;
+    setUser(user);
   };
 
   const signIn = async (loginData: ILoginData) => {
@@ -56,28 +60,19 @@ export default function AuthContextProvider({ children }: IProps) {
       return console.log("Por favor insira email e senha.");
     }
 
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_ROUTE}/auth/login`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(loginData),
-      }
-    );
+    const data = await signInRequest({ email, password });
 
-    if (!resp.ok) {
-      return console.log("Error...");
+    if (!data) {
+      return console.log("Failed to log in...");
     }
 
-    const data = await resp.json();
-
-    setUser(data.user);
+    setUser(data.userReturned);
     setCookie(undefined, "lar-fraterno_token", data.token, {
-      maxAge: 60 * 60 * 2, //2 hours
+      maxAge: 60 * 60 * 24, //24 hours
     });
+
+    const token = jwt.decode(data.token) as ITokenData;
+    console.log(checkTokenExpired(token.exp));
 
     router.push("/admin");
   };
