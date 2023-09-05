@@ -11,6 +11,7 @@ import { usePathname } from "next/navigation";
 interface IAuthContext {
   user: IUser | null;
   signIn: (data: ILoginData) => void;
+  signOut: () => void;
 }
 
 interface IProps {
@@ -77,8 +78,14 @@ export default function AuthContextProvider({ children }: IProps) {
     router.push("/admin");
   };
 
+  const signOut = async () => {
+    destroyCookie(undefined, "lar-fraterno_token");
+
+    return router.push("/login");
+  };
+
   return (
-    <AuthContext.Provider value={{ user, signIn }}>
+    <AuthContext.Provider value={{ user, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
