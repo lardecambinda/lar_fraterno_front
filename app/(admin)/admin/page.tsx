@@ -18,43 +18,11 @@ export default function page() {
   const [posts, setPosts] = useState<IPost[]>([]);
 
   useEffect(() => {
-    // Restrict Route
-    const { "lar-fraterno_token": token } = parseCookies();
-    if (!token) {
-      router.push("/login");
-    }
-
     getPosts().then((data) => setPosts(data as IPost[]));
     getUsers().then((data) => setUsers(data));
 
     // getCategories(token);
   }, []);
-
-  // const getCategories = async (token: string) => {
-  //   if (!token) {
-  //     return console.log("Not logged in...");
-  //   }
-
-  //   const resp = await fetch(
-  //     `${process.env.NEXT_PUBLIC_API_BASE_ROUTE}/categories/all`,
-  //     {
-  //       method: "GET",
-  //       headers: {
-  //         Accept: "application/json",
-  //         "Content-type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     }
-  //   );
-
-  //   if (!resp.ok) {
-  //     return console.log("Error...");
-  //   }
-
-  //   const data = await resp.json();
-
-  //   setCategories(data.categories);
-  // };
 
   return (
     <div className="pb-[100px] md:pb-0">
@@ -76,7 +44,7 @@ export default function page() {
         />
       </div>
       <div className="flex mt-4 p-4 bg-white shadow-md rounded-md ">
-        {/* <PostsContainer posts={posts} /> */}
+        <PostsContainer posts={posts} />
       </div>
     </div>
   );

@@ -1,9 +1,8 @@
 "use client";
 import useAuth from "@/hooks/useAuth";
 import { ILoginData } from "@/types/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { parseCookies } from "nookies";
 
 export default function page() {
   const [loginData, setLoginData] = useState<ILoginData>({
@@ -12,15 +11,6 @@ export default function page() {
   });
   const { user, signIn } = useAuth();
   const router = useRouter();
-
-  // Restrict Route
-
-  // useEffect(() => {
-  //   const { "lar-fraterno_token": token } = parseCookies();
-  //   if (token) {
-  //     router.push("/admin");
-  //   }
-  // }, []);
 
   const handleLogin = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
