@@ -48,7 +48,7 @@ export default function RootLayout({
           className={`${montserrat.className} flex items-start justify-start`}
         >
           <AdminNav />
-          <div className="flex-1 h-full px-4 md:ml-[132px]">
+          <div className="flex-1 h-full md:ml-[132px] lg:p-4">
             <AdminHeader />
             <div className="text-light-black">
               <div className="max-lg:px-4">{children}</div>
