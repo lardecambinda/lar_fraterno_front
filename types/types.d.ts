@@ -34,6 +34,7 @@ export interface ILoginData {
 export interface ICreatePost {
   title: string;
   content: string;
+  user_id: string;
 }
 
 export interface ITokenData {

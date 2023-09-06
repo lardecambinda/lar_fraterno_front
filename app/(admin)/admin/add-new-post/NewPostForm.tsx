@@ -1,6 +1,7 @@
 "use client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { createPost } from "@/services/apolloAPI";
+import useAuth from "@/hooks/useAuth";
 
 interface IFormValues {
   title: string;
@@ -13,13 +14,18 @@ const NewPostForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormValues>();
+  const { user } = useAuth();
 
   const submit: SubmitHandler<IFormValues> = (data) => {
     console.log(data);
 
     const { title, content } = data;
 
-    createPost({ title, content });
+    if (!user) {
+      return;
+    }
+
+    createPost({ title, content, user_id: user.id });
   };
   return (
     <div className="w-full">

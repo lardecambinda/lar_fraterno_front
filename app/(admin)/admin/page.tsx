@@ -4,14 +4,12 @@ import useAuth from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IPost, IUser } from "@/types/types";
-import { parseCookies } from "nookies";
 import PostsContainer from "./PostsContainer";
 import { getPosts, getUsers } from "@/services/apolloAPI";
 import { Users, File, Shapes } from "lucide-react";
 
 export default function page() {
   const { user } = useAuth();
-  const router = useRouter();
 
   const [users, setUsers] = useState<IUser[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
