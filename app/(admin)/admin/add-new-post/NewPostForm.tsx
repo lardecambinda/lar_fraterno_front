@@ -2,6 +2,9 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { createPost } from "@/services/apolloAPI";
 import useAuth from "@/hooks/useAuth";
+import { useState } from "react";
+import { Divide, Paperclip } from "lucide-react";
+import { IFiles } from "@/types/types";
 
 interface IFormValues {
   title: string;
@@ -14,7 +17,11 @@ const NewPostForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormValues>();
+
   const { user } = useAuth();
+
+  const [inputFiles, setInputFiles] = useState<File[] | undefined>(undefined);
+  const [formFiles, setFormFiles] = useState<IFiles[] | undefined>();
 
   const submit: SubmitHandler<IFormValues> = (data) => {
     console.log(data);
@@ -27,6 +34,20 @@ const NewPostForm = () => {
 
     createPost({ title, content, user_id: user.id });
   };
+
+  const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = e.target.files;
+
+    if (!selectedFiles) {
+      return;
+    }
+
+    const fileArr = Array.from(selectedFiles);
+    console.log(fileArr);
+
+    setInputFiles(fileArr);
+  };
+
   return (
     <div className="w-full">
       <form
@@ -70,10 +91,38 @@ const NewPostForm = () => {
           )}
         </div>
 
-        {/* <div>
-          <label htmlFor="files">Arquivos</label>
-          <input type="file" name="files" id="files" />
-        </div> */}
+        <div>
+          <div>
+            <label
+              title="Adicionar arquivos"
+              className="cursor-pointer flex items-center justify-center gap-2 "
+              htmlFor="files"
+            >
+              <Paperclip size={16} strokeWidth={1.5} />
+              <span className="text-sm">Adicionar arquivos</span>
+            </label>
+            <input
+              className="absolute opacity-0 pointer-events-none"
+              onChange={handleFiles}
+              type="file"
+              name="files"
+              id="files"
+              multiple
+            />
+          </div>
+
+          {inputFiles && inputFiles.length > 0 && (
+            <div className="border p-4 my-4">
+              {inputFiles.map((file) => {
+                return (
+                  <div className="p-2 border-b last-of-type:border-none">
+                    <p>{file.name}</p>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
 
         <button
           title="Enviar"
