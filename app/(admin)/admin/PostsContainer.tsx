@@ -19,7 +19,7 @@ export default function PostsContainer({ posts }: IProps) {
 
       <div className="md:overflow-y-scroll md:h-[420px] lg:h-[420px] scrollbar">
         {posts.length < 1 ? (
-          <div>Sem posts no momento</div>
+          <div>Nenhuma Publicação</div>
         ) : (
           posts.map((post) => {
             return (

@@ -136,7 +136,7 @@ const NewPostForm = () => {
   return (
     <div className="w-full">
       <form
-        className="flex flex-col w-full bg-white rounded shadow-sm px-4 py-5"
+        className="flex flex-col w-full bg-white  shadow-sm px-4 py-5"
         onSubmit={handleSubmit(submit)}
       >
         <div className="relative mb-4">
