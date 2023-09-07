@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 :root{
   --violet: #D6BFD5; 
   --black: #272930;
@@ -29,3 +27,5 @@ body {
   /* .logo{
     filter: brightness(0) saturate(100%) invert(13%) sepia(9%) saturate(1095%) hue-rotate(191deg) brightness(97%) contrast(91%);
   } */
+
+

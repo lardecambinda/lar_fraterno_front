@@ -44,8 +44,8 @@ export interface ITokenData {
   role: "ADMIN" | "USER";
 }
 
-export interface IFiles {
-  File: File;
+export interface IFile {
+  file: File;
   fileDate: string;
   fileCategory: number;
 }

@@ -1,0 +1,24 @@
+.tooltip{
+    position: absolute;
+    bottom:70%;
+    
+    pointer-events: none;
+    opacity: 0;
+    
+    transition: all .3s ease-in-out;
+    
+    
+   
+   
+  }
+  
+  .element{
+    position: relative;
+    
+    
+  }
+  
+  .element:hover > .tooltip{
+   opacity:1;
+     bottom:120%;
+  }

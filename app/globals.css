@@ -74,3 +74,20 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+:root{
+  --black: #272932;
+  --background: #f5e5fc;  
+  --secondary: #9d69a3;
+  --violet: #D6BFD5
+}
+
+body {
+  min-height: 100vh;
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(to bottom,var(--violet), var(--background));
+}
+
+
+

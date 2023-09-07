@@ -73,7 +73,6 @@ export default function AuthContextProvider({ children }: IProps) {
     });
 
     const token = jwt.decode(data.token) as ITokenData;
-    console.log(checkTokenExpired(token.exp));
 
     router.push("/admin");
   };
