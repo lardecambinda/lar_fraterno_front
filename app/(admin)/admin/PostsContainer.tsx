@@ -9,7 +9,7 @@ interface IProps {
 
 export default function PostsContainer({ posts }: IProps) {
   return (
-    <div className="md:h-[500px] lg:h-[480px] w-full">
+    <div className="md:h-[500px] lg:h-[480px] w-full ">
       <div className="flex items-center mb-4 gap-2 ">
         <div className="p-2 bg-violet rounded-full ">
           <Files strokeWidth={1.5} color="#272932" />
@@ -17,7 +17,7 @@ export default function PostsContainer({ posts }: IProps) {
         <h2 className="font-semibold text-lg ">Todas as Publicações</h2>
       </div>
 
-      <div>
+      <div className="md:overflow-y-scroll md:h-[420px] lg:h-[420px] scrollbar">
         {posts.length < 1 ? (
           <div>Sem posts no momento</div>
         ) : (

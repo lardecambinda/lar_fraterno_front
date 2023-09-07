@@ -23,9 +23,25 @@ body {
   }
 
 
-  /* black */
-  /* .logo{
-    filter: brightness(0) saturate(100%) invert(13%) sepia(9%) saturate(1095%) hue-rotate(191deg) brightness(97%) contrast(91%);
-  } */
 
 
+  /* Scroll bar styles */
+.scrollbar::-webkit-scrollbar-track
+{
+
+	background-color: #F5F5F5;
+  border-radius: 4px;
+
+}
+
+.scrollbar::-webkit-scrollbar
+{
+	width: 8px;
+	background-color: #F5F5F5;
+}
+
+.scrollbar::-webkit-scrollbar-thumb
+{
+	background-color: var(--black);
+  border-radius: 4px;
+}
