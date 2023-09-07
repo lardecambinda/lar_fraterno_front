@@ -5,6 +5,9 @@ import AdminHeader from "./AdminHeader";
 import AdminNav from "./AdminNav";
 import AuthContextProvider from "@/contexts/AuthContext";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata = {
@@ -54,6 +57,7 @@ export default function RootLayout({
               <div className="max-lg:px-4">{children}</div>
             </div>
           </div>
+          <ToastContainer autoClose={8000} />
         </body>
       </AuthContextProvider>
     </html>
