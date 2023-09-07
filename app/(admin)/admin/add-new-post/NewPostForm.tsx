@@ -180,7 +180,7 @@ const NewPostForm = () => {
           <div>
             <label
               title="Adicionar arquivos"
-              className="cursor-pointer flex items-center justify-center gap-2 "
+              className="cursor-pointer flex items-center justify-center gap-2 w-fit m-auto"
               htmlFor="files"
             >
               <Paperclip size={16} strokeWidth={1.5} />
@@ -220,7 +220,7 @@ const NewPostForm = () => {
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <div className="flex items-center justify-center gap-2">
+                      <div className="flex items-center justify-center gap-2 pr-2 border-r">
                         <Tooltip text="Selecione a data em que a reunião aconteceu">
                           <span className="text-[10px] cursor-default bg-light-black text-white rounded px-1">
                             ?
@@ -254,19 +254,6 @@ const NewPostForm = () => {
               })}
             </div>
           )}
-        </div>
-
-        <div>
-          {formFiles &&
-            formFiles.map((file, i) => {
-              return (
-                <div key={i}>
-                  <p>{file.file.name}</p>
-                  <p>{file.fileDate}</p>
-                  <p>{file.fileCategory}</p>
-                </div>
-              );
-            })}
         </div>
 
         <button
