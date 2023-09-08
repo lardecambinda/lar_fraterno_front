@@ -51,11 +51,11 @@ const NewPostForm = () => {
 
     console.log(newPost);
 
-    // setLoading(true);
+    setLoading(true);
 
-    // console.log(await createPost({ title, content, user_id: user.id }));
+    console.log(await createPost({ title, content, user_id: user.id }));
 
-    // setLoading(false);
+    setLoading(false);
 
     // reset form
     setValue("title", "");
