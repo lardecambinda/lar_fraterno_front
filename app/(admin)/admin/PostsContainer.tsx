@@ -1,7 +1,6 @@
 import Skeleton from "@/components/Skeleton/Skeleton";
 import { IPost } from "@/types/types";
 import formatCreatedAt from "@/utils/formatCreatedAt";
-import { Loader } from "lucide-react";
 
 import { Files } from "lucide-react";
 
@@ -10,6 +9,12 @@ interface IProps {
 }
 
 export default function PostsContainer({ posts }: IProps) {
+  const sortPosts = () => {
+    return posts?.sort((a: IPost, b) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+  };
+
   return (
     <div className="md:h-[500px] lg:h-[480px] w-full ">
       <div className="flex items-center mb-4 gap-2 ">
@@ -24,7 +29,7 @@ export default function PostsContainer({ posts }: IProps) {
           posts.length < 1 ? (
             <div>Nenhuma Publicação</div>
           ) : (
-            posts.map((post) => {
+            (sortPosts() as IPost[]).map((post) => {
               return (
                 <div
                   key={post.id}

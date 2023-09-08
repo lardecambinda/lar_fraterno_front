@@ -5,8 +5,6 @@ export default function formatCreatedAt(createdAt: string) {
 
   const localeDate = new Date(createdAt).toLocaleString("pt-BR");
 
-  console.log(localeDate);
-
   const [date, time] = localeDate.split(", ");
 
   const [day, month, year] = date.split("/");
