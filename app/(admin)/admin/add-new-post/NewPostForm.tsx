@@ -257,7 +257,11 @@ const NewPostForm = () => {
           )}
         </div>
 
-        <SubmitButton label="Enviar" loading={loading} />
+        <SubmitButton
+          className="w-16 self-end"
+          label="Enviar"
+          loading={loading}
+        />
       </form>
     </div>
   );
