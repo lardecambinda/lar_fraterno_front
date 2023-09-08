@@ -1,10 +1,12 @@
+import Skeleton from "@/components/Skeleton/Skeleton";
 import { IPost } from "@/types/types";
 import formatCreatedAt from "@/utils/formatCreatedAt";
+import { Loader } from "lucide-react";
 
 import { Files } from "lucide-react";
 
 interface IProps {
-  posts: IPost[];
+  posts: IPost[] | undefined;
 }
 
 export default function PostsContainer({ posts }: IProps) {
@@ -18,33 +20,42 @@ export default function PostsContainer({ posts }: IProps) {
       </div>
 
       <div className="md:overflow-y-scroll md:h-[420px] lg:h-[420px] scrollbar">
-        {posts.length < 1 ? (
-          <div>Nenhuma Publicação</div>
-        ) : (
-          posts.map((post) => {
-            return (
-              <div
-                key={post.id}
-                className="mb-2 pb-4 px-1 border-b last-of-type:border-none"
-              >
-                <h3 className="font-semibold text-sm">{post.title}</h3>
-                <p className="line-clamp-2 text-sm">{post.content}</p>
+        {posts ? (
+          posts.length < 1 ? (
+            <div>Nenhuma Publicação</div>
+          ) : (
+            posts.map((post) => {
+              return (
+                <div
+                  key={post.id}
+                  className="mb-2 mx-auto max-w-[98%] pb-4 px-1 border-b last-of-type:border-none"
+                >
+                  <h3 className="font-semibold text-sm">{post.title}</h3>
+                  <p className="line-clamp-1 text-sm">{post.content}</p>
 
-                <div className="mt-2">
-                  <p className="text-xs text-gray-500">
-                    {formatCreatedAt(post.createdAt)}
-                  </p>
+                  <div className="mt-2">
+                    <p className="text-xs text-gray-500">
+                      {formatCreatedAt(post.createdAt)}
+                    </p>
 
-                  <p className="text-xs">
-                    Created by{" "}
-                    <span className="font-semibold">
-                      {post.users.user_name}
-                    </span>
-                  </p>
+                    <p className="text-xs">
+                      Created by{" "}
+                      <span className="font-semibold">
+                        {post.users.user_name}
+                      </span>
+                    </p>
+                  </div>
                 </div>
-              </div>
-            );
-          })
+              );
+            })
+          )
+        ) : (
+          <>
+            <Skeleton className="mb-2 max-w-[98%] mx-auto" height={90} />
+            <Skeleton className="mb-2 max-w-[98%] mx-auto" height={90} />
+            <Skeleton className="mb-2 max-w-[98%] mx-auto" height={90} />
+            <Skeleton className="mb-2 max-w-[98%] mx-auto" height={90} />
+          </>
         )}
       </div>
     </div>

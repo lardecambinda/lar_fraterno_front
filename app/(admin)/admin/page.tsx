@@ -2,7 +2,6 @@
 import Infocard from "./Infocard";
 import useAuth from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { IPost, IUser } from "@/types/types";
 import PostsContainer from "./PostsContainer";
 import { getPosts, getUsers } from "@/services/apolloAPI";
@@ -42,7 +41,7 @@ export default function page() {
         />
       </div>
       <div className="flex mt-4 p-4 bg-white shadow-md rounded-md ">
-        {posts && <PostsContainer posts={posts} />}
+        {<PostsContainer posts={posts} />}
       </div>
     </div>
   );
