@@ -12,6 +12,7 @@ interface IAuthContext {
   user: IUser | null;
   signIn: (data: ILoginData) => void;
   signOut: () => void;
+  authLoading: boolean;
 }
 
 interface IProps {
@@ -22,6 +23,7 @@ export const AuthContext = createContext({} as IAuthContext);
 
 export default function AuthContextProvider({ children }: IProps) {
   const [user, setUser] = useState<IUser | null>(null);
+  const [authLoading, setAuthLoading] = useState<boolean>(false);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -33,6 +35,8 @@ export default function AuthContextProvider({ children }: IProps) {
       return router.push("/login");
     }
 
+    setAuthLoading(true);
+
     const tokenDecoded = jwt.decode(token) as ITokenData;
     const expired = checkTokenExpired(tokenDecoded.exp);
 
@@ -41,17 +45,23 @@ export default function AuthContextProvider({ children }: IProps) {
 
       destroyCookie(undefined, "lar-fraterno_token");
 
+      setAuthLoading(false);
+
       return router.push("/login");
     } else {
       const userId = tokenDecoded.id;
       getMe(userId);
 
-      router.push(pathname);
+      setAuthLoading(false);
+
+      return router.push(pathname);
     }
   }, []);
 
   const getMe = async (id: string) => {
+    setAuthLoading(true);
     const user = (await getUserById(id)) as IUser;
+    setAuthLoading(false);
     setUser(user);
   };
 
@@ -61,12 +71,15 @@ export default function AuthContextProvider({ children }: IProps) {
       return console.log("Por favor insira email e senha.");
     }
 
+    setAuthLoading(true);
+
     const data = await signInRequest({ email, password });
 
     if (!data) {
       return console.log("Failed to log in...");
     }
 
+    setAuthLoading(false);
     setUser(data.userReturned);
     setCookie(undefined, "lar-fraterno_token", data.token, {
       maxAge: 60 * 60 * 24, //24 hours
@@ -84,7 +97,7 @@ export default function AuthContextProvider({ children }: IProps) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, signIn, signOut, authLoading }}>
       {children}
     </AuthContext.Provider>
   );

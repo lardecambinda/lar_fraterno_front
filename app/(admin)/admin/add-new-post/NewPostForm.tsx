@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Loader, Paperclip } from "lucide-react";
 import { IFile } from "@/types/types";
 import Tooltip from "@/components/Tooltip/Tooltip";
+import SubmitButton from "@/components/SubmitButton/SubmitButton";
 
 interface IFormValues {
   title: string;
@@ -256,19 +257,7 @@ const NewPostForm = () => {
           )}
         </div>
 
-        <button
-          title={loading ? "Enviando..." : "Enviar"}
-          className={`self-end bg-light-black text-white font-semibold  w-20 h-11 flex items-center justify-center rounded`}
-          disabled={loading ? true : false}
-        >
-          {loading ? (
-            <div className="animate-spin">
-              <Loader size={24} strokeWidth={1.5} />
-            </div>
-          ) : (
-            "Enviar"
-          )}
-        </button>
+        <SubmitButton label="Enviar" loading={loading} />
       </form>
     </div>
   );

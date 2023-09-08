@@ -3,13 +3,14 @@ import useAuth from "@/hooks/useAuth";
 import { ILoginData } from "@/types/types";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import SubmitButton from "@/components/SubmitButton/SubmitButton";
 
 export default function page() {
   const [loginData, setLoginData] = useState<ILoginData>({
     email: "",
     password: "",
   });
-  const { user, signIn } = useAuth();
+  const { user, signIn, authLoading } = useAuth();
   const router = useRouter();
 
   const handleLogin = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -57,13 +58,12 @@ export default function page() {
               }
             />
           </div>
-          <button
-            title="Entrar"
-            className="bg-light-black text-white font-semibold h-11 "
+
+          <SubmitButton
             onClick={(e) => handleLogin(e)}
-          >
-            Entrar
-          </button>
+            label="Entrar"
+            loading={authLoading}
+          />
         </form>
       </div>
     </div>
