@@ -18,6 +18,7 @@ const SubmitButton = ({
 }: IProps) => {
   return (
     <button
+      type="submit"
       style={{ width: width && width }}
       onClick={onClick && onClick}
       title={loading ? "Carregando..." : label}

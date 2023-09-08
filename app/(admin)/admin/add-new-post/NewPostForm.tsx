@@ -7,6 +7,7 @@ import { Paperclip, Trash2 } from "lucide-react";
 import { IFile } from "@/types/types";
 import Tooltip from "@/components/Tooltip/Tooltip";
 import SubmitButton from "@/components/SubmitButton/SubmitButton";
+import { toast } from "react-toastify";
 
 interface IFormValues {
   title: string;

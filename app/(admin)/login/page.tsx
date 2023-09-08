@@ -2,7 +2,6 @@
 import useAuth from "@/hooks/useAuth";
 import { ILoginData } from "@/types/types";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton/SubmitButton";
 
 export default function page() {
@@ -10,8 +9,7 @@ export default function page() {
     email: "",
     password: "",
   });
-  const { user, signIn, authLoading } = useAuth();
-  const router = useRouter();
+  const { signIn, authLoading } = useAuth();
 
   const handleLogin = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();

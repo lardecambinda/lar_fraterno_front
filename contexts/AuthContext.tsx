@@ -75,6 +75,8 @@ export default function AuthContextProvider({ children }: IProps) {
 
     const data = await signInRequest({ email, password });
 
+    setAuthLoading(false);
+
     if (!data) {
       return console.log("Failed to log in...");
     }
@@ -84,8 +86,6 @@ export default function AuthContextProvider({ children }: IProps) {
     setCookie(undefined, "lar-fraterno_token", data.token, {
       maxAge: 60 * 60 * 24, //24 hours
     });
-
-    const token = jwt.decode(data.token) as ITokenData;
 
     router.push("/admin");
   };
