@@ -6,16 +6,24 @@ interface IProps {
   label: string;
   onClick?: (e: any) => void;
   className?: string;
+  width?: string | number;
 }
 
-const SubmitButton = ({ loading, label, onClick, className }: IProps) => {
+const SubmitButton = ({
+  loading,
+  label,
+  onClick,
+  className,
+  width,
+}: IProps) => {
   return (
     <button
+      style={{ width: width && width }}
       onClick={onClick && onClick}
       title={loading ? "Carregando..." : label}
-      className={`bg-light-black text-white font-semibold  w-full h-11 flex items-center justify-center rounded ${
+      className={`bg-light-black text-white font-semibold h-11 flex items-center justify-center rounded ${
         className && className
-      }`}
+      } ${!width ? "w-full" : null}`}
       disabled={loading ? true : false}
     >
       {loading ? (

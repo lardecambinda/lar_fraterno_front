@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { createPost } from "@/services/apolloAPI";
 import useAuth from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
-import { Loader, Paperclip } from "lucide-react";
+import { Paperclip, Trash2 } from "lucide-react";
 import { IFile } from "@/types/types";
 import Tooltip from "@/components/Tooltip/Tooltip";
 import SubmitButton from "@/components/SubmitButton/SubmitButton";
@@ -35,12 +35,9 @@ const NewPostForm = () => {
     }
 
     if (formFiles && formFiles.length > 0) {
-      const noDate = formFiles.filter((file) => !file.fileDate);
-      const noCategory = formFiles.filter((file) => !file.fileCategory);
+      const noDate = formFiles.filter((file) => file.fileDate == "");
 
-      console.log(noDate, noCategory);
-
-      if (noDate.length > 0 || noCategory.length > 0) {
+      if (noDate.length > 0) {
         return console.log("Todos os arquivos devem ter data e categoria...");
       }
     }
@@ -54,17 +51,17 @@ const NewPostForm = () => {
 
     console.log(newPost);
 
-    setLoading(true);
+    // setLoading(true);
 
-    console.log(await createPost({ title, content, user_id: user.id }));
+    // console.log(await createPost({ title, content, user_id: user.id }));
 
-    setLoading(false);
+    // setLoading(false);
 
     // reset form
     setValue("title", "");
     setValue("content", "");
-    setFormFiles([]);
-    setInputFiles([]);
+    setFormFiles(undefined);
+    setInputFiles(undefined);
   };
 
   const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,7 +72,6 @@ const NewPostForm = () => {
     }
 
     const fileArr = Array.from(selectedFiles);
-    console.log(fileArr);
 
     setInputFiles(fileArr);
   };
@@ -83,7 +79,7 @@ const NewPostForm = () => {
   useEffect(() => {
     const temp: IFile[] | undefined = [];
 
-    if (!inputFiles) {
+    if (!inputFiles || (formFiles && formFiles.length > 0)) {
       return;
     }
 
@@ -134,6 +130,23 @@ const NewPostForm = () => {
     setFormFiles([...temp]);
   };
 
+  const handleDeleteFile = (i: number) => {
+    if (!formFiles || !inputFiles) {
+      return;
+    }
+
+    const tempFormFiles = formFiles.filter((item) => {
+      return formFiles.indexOf(item) != i;
+    });
+
+    const tempInputFiles = inputFiles.filter((item) => {
+      return inputFiles.indexOf(item) != i;
+    });
+
+    setFormFiles(tempFormFiles);
+    setInputFiles(tempInputFiles);
+  };
+
   return (
     <div className="w-full">
       <form
@@ -177,7 +190,7 @@ const NewPostForm = () => {
           )}
         </div>
 
-        <div>
+        <div className="mb-4">
           <div>
             <label
               title="Adicionar arquivos"
@@ -200,7 +213,7 @@ const NewPostForm = () => {
 
           {inputFiles && inputFiles.length > 0 && (
             <div className="border p-4 my-4">
-              <div className="flex items-center justify-end text-xs text-gray-400 mb-1">
+              <div className="flex items-center justify-end text-xs text-gray-400">
                 <p>
                   {" "}
                   <span>{inputFiles.length}</span>{" "}
@@ -249,6 +262,17 @@ const NewPostForm = () => {
                         <option value={3}>Tratamento</option>
                         <option value={4}>Estudo</option>
                       </select>
+
+                      <div>
+                        <button
+                          onClick={() => handleDeleteFile(i)}
+                          className="flex items-center justify-center px-1"
+                          title="Deletar arquivo"
+                          type="button"
+                        >
+                          <Trash2 size={16} color="#ff5757" strokeWidth={1.5} />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 );
@@ -258,7 +282,8 @@ const NewPostForm = () => {
         </div>
 
         <SubmitButton
-          className="w-16 self-end"
+          width={"80px"}
+          className=" self-end"
           label="Enviar"
           loading={loading}
         />
