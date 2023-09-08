@@ -1,6 +1,3 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import { Loader } from "lucide-react";
 
 type Props = {
@@ -9,12 +6,6 @@ type Props = {
   Icon: JSX.Element;
 };
 export default function Infocard({ title, number, Icon }: Props) {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(false);
-  }, [number]);
-
   return (
     <div className="p-4 rounded-md shadow-md bg-white flex-1">
       <div>
@@ -26,14 +17,14 @@ export default function Infocard({ title, number, Icon }: Props) {
         </div>
 
         <p className="text-3xl font-bold ml-4">
-          {loading ? (
-            <span className="animate-spin block w-fit py-2">
-              <Loader strokeWidth={1.5} />
-            </span>
-          ) : number ? (
+          {number ? (
+            number
+          ) : number == 0 ? (
             number
           ) : (
-            0
+            <span className="block py-1 w-fit animate-spin">
+              <Loader size={26} strokeWidth={1.5} />
+            </span>
           )}
         </p>
       </div>

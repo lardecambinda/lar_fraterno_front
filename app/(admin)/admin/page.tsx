@@ -11,9 +11,9 @@ import { Users, File, Shapes } from "lucide-react";
 export default function page() {
   const { user } = useAuth();
 
-  const [users, setUsers] = useState<IUser[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [posts, setPosts] = useState<IPost[]>([]);
+  const [users, setUsers] = useState<IUser[]>();
+  const [categories, setCategories] = useState<string[]>();
+  const [posts, setPosts] = useState<IPost[]>();
 
   useEffect(() => {
     getPosts().then((data) => setPosts(data as IPost[]));
@@ -42,7 +42,7 @@ export default function page() {
         />
       </div>
       <div className="flex mt-4 p-4 bg-white shadow-md rounded-md ">
-        <PostsContainer posts={posts} />
+        {posts && <PostsContainer posts={posts} />}
       </div>
     </div>
   );
