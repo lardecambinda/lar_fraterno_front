@@ -3,10 +3,14 @@ export default function formatCreatedAt(createdAt: string) {
     return;
   }
 
-  const [date, time] = createdAt.split("T");
+  const localeDate = new Date(createdAt).toLocaleString("pt-BR");
 
-  const [year, month, day] = date.split("-");
-  const [hours, minutes, seconds] = time.split(".")[0].split(":");
+  console.log(localeDate);
+
+  const [date, time] = localeDate.split(", ");
+
+  const [day, month, year] = date.split("/");
+  const [hours, minutes, seconds] = time.split(":");
 
   return `${day}/${month}/${year} - ${hours}:${minutes}`;
 }
