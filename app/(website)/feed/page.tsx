@@ -60,7 +60,8 @@ function PostCard({ post, userId }: { post: IPost; userId: string }) {
 
   return (
     <article className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-      <div className="flex items-center gap-3 px-5 pt-5 pb-4">
+      {/* Header */}
+      <div className="flex items-center gap-3 px-5 pt-5 pb-3">
         <Avatar name={authorName} />
         <div className="flex-1">
           <p className="font-semibold text-sm text-[var(--black)]">{authorName}</p>
@@ -70,13 +71,8 @@ function PostCard({ post, userId }: { post: IPost; userId: string }) {
         </div>
       </div>
 
-      {post.files?.length > 0 && (
-        <div className="flex flex-col gap-2 px-5 pb-3">
-          {post.files.map((url, i) => <FileViewer key={i} url={url} />)}
-        </div>
-      )}
-
-      <div className="px-5 pb-4">
+      {/* Title + Content */}
+      <div className="px-5 pb-3">
         <h2
           className="font-bold text-base text-[var(--black)] mb-1 cursor-pointer hover:underline"
           onClick={() => router.push(`/feed/${post.id}`)}
@@ -92,6 +88,14 @@ function PostCard({ post, userId }: { post: IPost; userId: string }) {
         )}
       </div>
 
+      {/* Files */}
+      {post.files?.length > 0 && (
+        <div className="flex flex-col gap-2 px-5 pb-3">
+          {post.files.map((url, i) => <FileViewer key={i} url={url} />)}
+        </div>
+      )}
+
+      {/* Tags */}
       {post.tags?.length > 0 && (
         <div className="px-5 pb-3 flex flex-wrap gap-1">
           {post.tags.map((tag, i) => (
@@ -104,6 +108,7 @@ function PostCard({ post, userId }: { post: IPost; userId: string }) {
 
       <div className="border-t border-gray-100 mx-5" />
 
+      {/* Comments */}
       <div className="px-5 py-4 flex flex-col gap-3">
         {comments.map((c: any) => (
           <div key={c.id} className="flex items-start gap-2">
@@ -164,14 +169,12 @@ export default function FeedPage() {
 
       {allTags.length > 0 && (
         <div className="flex flex-wrap gap-2 px-1">
-          <button
-            onClick={() => setActiveTag(null)}
+          <button onClick={() => setActiveTag(null)}
             className={`text-xs px-3 py-1 rounded-full border transition-colors ${!activeTag ? "bg-[var(--secondary)] text-white border-[var(--secondary)]" : "border-gray-300 text-gray-600"}`}>
             Todos
           </button>
           {allTags.map((tag) => (
-            <button key={tag}
-              onClick={() => setActiveTag(activeTag === tag ? null : tag)}
+            <button key={tag} onClick={() => setActiveTag(activeTag === tag ? null : tag)}
               className={`text-xs px-3 py-1 rounded-full border transition-colors ${activeTag === tag ? "bg-[var(--secondary)] text-white border-[var(--secondary)]" : "border-gray-300 text-gray-600"}`}>
               #{tag}
             </button>
@@ -179,12 +182,8 @@ export default function FeedPage() {
         </div>
       )}
 
-      {filtered.length === 0 && (
-        <p className="text-center text-gray-400 py-16">Nenhuma publicação encontrada.</p>
-      )}
-      {filtered.map((post) => (
-        <PostCard key={post.id} post={post} userId={userId} />
-      ))}
+      {filtered.length === 0 && <p className="text-center text-gray-400 py-16">Nenhuma publicação encontrada.</p>}
+      {filtered.map((post) => <PostCard key={post.id} post={post} userId={userId} />)}
     </div>
   );
 }
