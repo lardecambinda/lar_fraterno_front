@@ -42,9 +42,23 @@ export default function Nav() {
 
           <Link
             className="text-xs sm:text-sm hover:underline flex items-center gap-1 ml-2 sm:border-l sm:border-light-black pl-2"
-            href={"/admin"}
+            href={"/feed"}
+          >
+            Feed
+          </Link>
+
+          <Link
+            className="text-xs sm:text-sm hover:underline flex items-center gap-1 ml-2 sm:border-l sm:border-light-black pl-2"
+            href={"/perfil"}
           >
             <User size={16} strokeWidth={1.5} />
+            Perfil
+          </Link>
+
+          <Link
+            className="text-xs sm:text-sm hover:underline flex items-center gap-1 ml-2 sm:border-l sm:border-light-black pl-2"
+            href={"/admin"}
+          >
             Admin
           </Link>
         </div>

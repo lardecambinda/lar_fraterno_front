@@ -34,6 +34,8 @@ export interface ICreatePost {
   title: string;
   content: string;
   user_id: string;
+  files?: string[];
+  tags?: string[];
 }
 
 export interface ITokenData {
