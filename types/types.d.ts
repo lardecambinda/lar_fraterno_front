@@ -4,12 +4,11 @@ export interface IPost {
   content: string;
   files: string[];
   user_id: string;
-  date: string;
   createdAt: string;
   updatedAt: string;
   tags: string[];
   author?: IUser;
-  users: { user_id: string; user_name: string };
+  users: { id: string; user_name: string } | null;
 }
 
 export interface IBook {

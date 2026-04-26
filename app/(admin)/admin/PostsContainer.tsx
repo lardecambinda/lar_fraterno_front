@@ -46,7 +46,7 @@ export default function PostsContainer({ posts }: IProps) {
                     <p className="text-xs">
                       Created by{" "}
                       <span className="font-semibold">
-                        {post.users.user_name}
+                        {post.users?.user_name}
                       </span>
                     </p>
                   </div>

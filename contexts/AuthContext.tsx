@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { getUserById, signInRequest } from "@/services/apolloAPI";
 import * as jwt from "jsonwebtoken";
 import checkTokenExpired from "@/utils/checkTokenExpired";
-import { usePathname } from "next/navigation";
 
 interface IAuthContext {
   user: IUser | null;
@@ -26,7 +25,6 @@ export default function AuthContextProvider({ children }: IProps) {
   const [authLoading, setAuthLoading] = useState<boolean>(false);
 
   const router = useRouter();
-  const pathname = usePathname();
 
   useEffect(() => {
     const { "lar-fraterno_token": token } = parseCookies();
@@ -35,27 +33,15 @@ export default function AuthContextProvider({ children }: IProps) {
       return router.push("/login");
     }
 
-    setAuthLoading(true);
-
     const tokenDecoded = jwt.decode(token) as ITokenData;
     const expired = checkTokenExpired(tokenDecoded.exp);
 
     if (expired) {
-      console.log("token expired");
-
       destroyCookie(undefined, "lar-fraterno_token");
-
-      setAuthLoading(false);
-
       return router.push("/login");
-    } else {
-      const userId = tokenDecoded.id;
-      getMe(userId);
-
-      setAuthLoading(false);
-
-      return router.push(pathname);
     }
+
+    getMe(tokenDecoded.id);
   }, []);
 
   const getMe = async (id: string) => {
@@ -81,7 +67,6 @@ export default function AuthContextProvider({ children }: IProps) {
       return console.log("Failed to log in...");
     }
 
-    setAuthLoading(false);
     setUser(data.userReturned);
     setCookie(undefined, "lar-fraterno_token", data.token, {
       maxAge: 60 * 60 * 24, //24 hours

@@ -1,6 +1,6 @@
 "use client";
 
-import { Book } from "@/types/types";
+import { IBook } from "@/types/types";
 import Link from "next/link";
 import Slider from "react-slick";
 
@@ -38,7 +38,7 @@ const books = [
 ];
 
 interface CardProps {
-  book: Book;
+  book: IBook;
 }
 
 function Card({ book }: CardProps) {
@@ -95,7 +95,7 @@ export default function Carousel() {
   return (
     <div>
       <Slider {...settings}>
-        {books.map((book: Book, index) => {
+        {books.map((book: IBook, index) => {
           return <Card key={index} book={book} />;
         })}
       </Slider>

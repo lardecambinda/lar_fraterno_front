@@ -40,7 +40,7 @@ export const signInRequest = async ({ email, password }: ILoginData) => {
   try {
     return (await api.post("/auth", { user: { email, password } })).data;
   } catch (error: any) {
-    const errorMessage = JSON.parse(error.request.response).error_message;
+    const errorMessage = JSON.parse(error.request?.response || "{}").error_message ?? "Erro ao fazer login";
 
     toast(errorMessage, {
       theme: "light",

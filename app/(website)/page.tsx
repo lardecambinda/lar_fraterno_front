@@ -22,6 +22,11 @@ export default function Home() {
           <Carousel />
         </div>
       </section>
+
+      <section className="mt-16">
+        <h2 className="text-lg sm:text-2xl font-semibold mb-6">Publicações</h2>
+        <Posts />
+      </section>
     </main>
   );
 }
