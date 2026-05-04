@@ -2,7 +2,7 @@
 import { ILoginData, ITokenData, IUser } from "@/types/types";
 import { createContext, useState, useEffect } from "react";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { getUserById, signInRequest } from "@/services/apolloAPI";
 import * as jwt from "jsonwebtoken";
 import checkTokenExpired from "@/utils/checkTokenExpired";
@@ -22,14 +22,16 @@ export const AuthContext = createContext({} as IAuthContext);
 
 export default function AuthContextProvider({ children }: IProps) {
   const [user, setUser] = useState<IUser | null>(null);
-  const [authLoading, setAuthLoading] = useState<boolean>(false);
+  const [authLoading, setAuthLoading] = useState<boolean>(true);
 
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const { "lar-fraterno_token": token } = parseCookies();
 
     if (!token) {
+      setAuthLoading(false);
       return router.push("/login");
     }
 
@@ -38,38 +40,50 @@ export default function AuthContextProvider({ children }: IProps) {
 
     if (expired) {
       destroyCookie(undefined, "lar-fraterno_token");
+      setAuthLoading(false);
+      return router.push("/login");
+    }
+
+    // Bloquear acesso ao /admin para não-ADMIN
+    if (pathname?.startsWith("/admin") && tokenDecoded.role !== "ADMIN" && tokenDecoded.role !== "EDITOR") {
+      setAuthLoading(false);
       return router.push("/login");
     }
 
     getMe(tokenDecoded.id);
-  }, []);
+  }, [pathname]);
 
   const getMe = async (id: string) => {
     setAuthLoading(true);
-    const user = (await getUserById(id)) as IUser;
-    setAuthLoading(false);
-    setUser(user);
+    try {
+      const user = (await getUserById(id)) as IUser;
+      setUser(user);
+    } catch (error) {
+      console.error("Erro ao buscar usuário:", error);
+      destroyCookie(undefined, "lar-fraterno_token");
+      router.push("/login");
+    } finally {
+      setAuthLoading(false);
+    }
   };
 
   const signIn = async (loginData: ILoginData) => {
     const { email, password } = loginData;
-    if (!email || !password) {
-      return console.log("Por favor insira email e senha.");
-    }
+    if (!email || !password) return;
 
     setAuthLoading(true);
-
     const data = await signInRequest({ email, password });
-
     setAuthLoading(false);
 
-    if (!data) {
-      return console.log("Failed to log in...");
-    }
+    if (!data) return;
 
     setUser(data.userReturned);
     setCookie(undefined, "lar-fraterno_token", data.token, {
-      maxAge: 60 * 60 * 24, //24 hours
+      maxAge: 60 * 60 * 24, // 24 horas
+      path: "/",
+      secure: process.env.NODE_ENV === "production", // HTTPS apenas em produção
+      sameSite: "strict", // Proteção contra CSRF
+      httpOnly: false, // Precisa ser false para Next.js client-side
     });
 
     router.push("/admin");
@@ -77,7 +91,6 @@ export default function AuthContextProvider({ children }: IProps) {
 
   const signOut = async () => {
     destroyCookie(undefined, "lar-fraterno_token");
-
     return router.push("/login");
   };
 

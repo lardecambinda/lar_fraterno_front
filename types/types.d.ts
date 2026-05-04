@@ -7,6 +7,8 @@ export interface IPost {
   createdAt: string;
   updatedAt: string;
   tags: string[];
+  status: "PUBLISHED" | "DRAFT";
+  meeting_date: string | null;
   author?: IUser;
   users: { id: string; user_name: string } | null;
 }
@@ -21,7 +23,8 @@ export interface IUser {
   id: string;
   email: string;
   user_name: string;
-  role: string;
+  role: "ADMIN" | "EDITOR";
+  active: boolean;
   posts?: IPost[];
 }
 
@@ -36,13 +39,15 @@ export interface ICreatePost {
   user_id: string;
   files?: string[];
   tags?: string[];
+  status?: "PUBLISHED" | "DRAFT";
+  meeting_date?: string | null;
 }
 
 export interface ITokenData {
   exp: number;
   iat: number;
   id: string;
-  role: "ADMIN" | "USER";
+  role: "ADMIN" | "EDITOR";
 }
 
 export interface IFile {

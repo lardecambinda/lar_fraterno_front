@@ -4,6 +4,7 @@ import { Montserrat } from "next/font/google";
 import AdminHeader from "./AdminHeader";
 import AdminNav from "./AdminNav";
 import AuthContextProvider from "@/contexts/AuthContext";
+import AuthGuard from "./AuthGuard";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -49,15 +50,17 @@ export default function RootLayout({
       </head>
       <AuthContextProvider>
         <body
-          className={`${montserrat.className} flex items-start justify-start`}
+          className={`${montserrat.className} flex items-start justify-start bg-gray-50`}
         >
           <ToastProvider>
             <AdminNav />
-            <div className="flex-1 h-full md:ml-[132px] lg:p-4">
+            <div className="flex-1 h-screen md:ml-64 flex flex-col overflow-hidden">
               <AdminHeader />
-              <div className="text-light-black">
-                <div className="max-lg:px-4">{children}</div>
-              </div>
+              <main className="flex-1 overflow-y-auto">
+                <div className="max-w-7xl mx-auto px-6 py-6 pb-24 md:pb-6">
+                  <AuthGuard>{children}</AuthGuard>
+                </div>
+              </main>
             </div>
           </ToastProvider>
         </body>

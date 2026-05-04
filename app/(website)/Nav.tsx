@@ -1,66 +1,46 @@
 import Image from "next/image";
 import Link from "next/link";
 import Searchbar from "./Searchbar";
-import { Mail, User } from "lucide-react";
 
 export default function Nav() {
   return (
-    <nav className="w-full py-4">
-      <div className=" max-w-screen-lg m-auto max-lg:px-4 grid grid-cols-2 grid-rows-2  lg:flex lg:items-center lg:justify-between ">
-        <Link
-          className=" block w-fit"
-          title="lar fraterno de cambinda"
-          href={"/"}
-        >
-          <div className="w-fit flex flex-col items-center justify-center">
-            <Image
-              alt="logo"
-              width={200}
-              height={200}
-              src={"/images/larFraternoIconBlack.png"}
-              className="logo w-12 sm:w-16"
-              priority
-            />
-            <p className="text-xs max-w-[100px] text-center font-semibold leading-none">
-              Lar Fraterno de Cambinda
-            </p>
-          </div>
+    <nav className="w-full border-b border-[var(--violet)] bg-white/80 backdrop-blur-sm sticky top-0 z-40">
+      <div className="max-w-screen-lg mx-auto px-4 h-16 flex items-center justify-between gap-4">
+        {/* Logo */}
+        <Link href="/" title="Lar Fraterno de Cambinda" className="flex items-center gap-2.5 shrink-0">
+          <Image
+            alt="logo"
+            width={36}
+            height={36}
+            src="/images/larFraternoIconBlack.png"
+            className="rounded-md"
+            priority
+          />
+          <span className="text-sm font-semibold text-[var(--black)] leading-tight hidden sm:block">
+            Lar Fraterno<br />
+            <span className="font-normal text-xs text-gray-500">de Cambinda</span>
+          </span>
         </Link>
 
-        <div className="order-last lg:order-none col-span-full lg:flex-1 flex items-center justify-center h-fit mt-4">
+        {/* Search */}
+        <div className="flex-1 max-w-sm">
           <Searchbar />
         </div>
 
-        <div className="flex-col items-end sm:flex-row flex sm:items-center lg:justify-between justify-end">
+        {/* Links */}
+        <div className="flex items-center gap-4 shrink-0">
+          <Link
+            href="/reunioes"
+            className="text-sm font-medium text-gray-700 hover:text-[var(--secondary)] transition-colors"
+          >
+            Reuniões
+          </Link>
           <a
-            className="text-xs sm:text-sm hover:underline flex items-center gap-1 w-fit"
             href="mailto:lardecambinda@gmail.com"
+            className="text-sm text-gray-500 hover:text-[var(--secondary)] transition-colors hidden md:block"
           >
-            <Mail size={16} strokeWidth={1.5} />
-            lardecambinda@gmail.com
+            Contato
           </a>
-
-          <Link
-            className="text-xs sm:text-sm hover:underline flex items-center gap-1 ml-2 sm:border-l sm:border-light-black pl-2"
-            href={"/feed"}
-          >
-            Feed
-          </Link>
-
-          <Link
-            className="text-xs sm:text-sm hover:underline flex items-center gap-1 ml-2 sm:border-l sm:border-light-black pl-2"
-            href={"/perfil"}
-          >
-            <User size={16} strokeWidth={1.5} />
-            Perfil
-          </Link>
-
-          <Link
-            className="text-xs sm:text-sm hover:underline flex items-center gap-1 ml-2 sm:border-l sm:border-light-black pl-2"
-            href={"/admin"}
-          >
-            Admin
-          </Link>
         </div>
       </div>
     </nav>

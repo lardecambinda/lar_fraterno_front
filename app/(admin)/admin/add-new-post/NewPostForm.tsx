@@ -5,29 +5,31 @@ import useAuth from "@/hooks/useAuth";
 import { useState } from "react";
 import { Paperclip, Trash2, X } from "lucide-react";
 import SubmitButton from "@/components/SubmitButton/SubmitButton";
-import { toast } from "react-toastify";
 
 interface IFormValues {
   title: string;
   content: string;
-  tagInput: string;
+  meeting_date: string;
+  status: "PUBLISHED" | "DRAFT";
 }
 
 const CATEGORIES = ["Documentos", "Aulas", "Avisos", "Exú", "Caboclo", "Preto Velho", "Tratamento", "Estudo"];
 
 const NewPostForm = () => {
-  const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm<IFormValues>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<IFormValues>({
+    defaultValues: { status: "DRAFT" }
+  });
   const { user } = useAuth();
   const [files, setFiles] = useState<File[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const addTag = (tag: string) => {
-    const t = tag.trim().toLowerCase();
-    if (t && !tags.includes(t)) setTags((prev) => [...prev, t]);
+  const toggleTag = (cat: string) => {
+    const t = cat.toLowerCase();
+    setTags((prev) => prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t]);
   };
 
-  const submit: SubmitHandler<IFormValues> = async ({ title, content }) => {
+  const submit: SubmitHandler<IFormValues> = async ({ title, content, meeting_date, status }) => {
     if (!user) return;
     setLoading(true);
 
@@ -37,7 +39,15 @@ const NewPostForm = () => {
       if (fileUrls.length === 0) { setLoading(false); return; }
     }
 
-    await createPost({ title, content, user_id: user.id, files: fileUrls, tags });
+    await createPost({
+      title,
+      content,
+      user_id: user.id,
+      files: fileUrls,
+      tags,
+      status,
+      meeting_date: meeting_date || null,
+    });
 
     reset();
     setFiles([]);
@@ -69,14 +79,41 @@ const NewPostForm = () => {
         {errors.content && <p className="text-rose-500 text-xs">Conteúdo é obrigatório</p>}
       </div>
 
+      {/* Meeting date + Status */}
+      <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col gap-1 flex-1">
+          <label className="text-sm font-medium" htmlFor="meeting_date">Data da Reunião</label>
+          <input
+            type="date"
+            className="h-11 border outline-none px-4 text-sm"
+            {...register("meeting_date")}
+            id="meeting_date"
+          />
+        </div>
+        <div className="flex flex-col gap-1 flex-1">
+          <label className="text-sm font-medium" htmlFor="status">Status</label>
+          <select
+            className="h-11 border outline-none px-4 text-sm bg-white"
+            {...register("status")}
+            id="status"
+          >
+            <option value="DRAFT">Rascunho</option>
+            <option value="PUBLISHED">Publicado</option>
+          </select>
+        </div>
+      </div>
+
       {/* Tags */}
       <div className="flex flex-col gap-2">
         <label className="text-sm font-medium">Categorias</label>
         <div className="flex flex-wrap gap-2">
           {CATEGORIES.map((cat) => (
-            <button key={cat} type="button"
-              onClick={() => tags.includes(cat.toLowerCase()) ? setTags(tags.filter(t => t !== cat.toLowerCase())) : addTag(cat)}
-              className={`text-xs px-3 py-1 rounded-full border transition-colors ${tags.includes(cat.toLowerCase()) ? "bg-[var(--secondary)] text-white border-[var(--secondary)]" : "border-gray-300 text-gray-600 hover:border-[var(--secondary)]"}`}>
+            <button key={cat} type="button" onClick={() => toggleTag(cat)}
+              className={`text-xs px-3 py-1 rounded-full border transition-colors ${
+                tags.includes(cat.toLowerCase())
+                  ? "bg-[var(--secondary)] text-white border-[var(--secondary)]"
+                  : "border-gray-300 text-gray-600 hover:border-[var(--secondary)]"
+              }`}>
               {cat}
             </button>
           ))}
@@ -101,7 +138,6 @@ const NewPostForm = () => {
         <input className="hidden" onChange={(e) => {
           if (e.target.files) setFiles((prev) => [...prev, ...Array.from(e.target.files!)]);
         }} type="file" id="files" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.png,.jpg,.jpeg" />
-
         {files.length > 0 && (
           <div className="border rounded p-3 flex flex-col gap-2">
             {files.map((f, i) => (
@@ -116,7 +152,7 @@ const NewPostForm = () => {
         )}
       </div>
 
-      <SubmitButton width="80px" className="self-end" label="Publicar" loading={loading} />
+      <SubmitButton width="80px" className="self-end" label="Salvar" loading={loading} />
     </form>
   );
 };
