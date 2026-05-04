@@ -6,6 +6,7 @@ import { IUser } from "@/types/types";
 import { toast } from "react-toastify";
 import { Pencil, Trash2, UserCheck, UserX, Loader2, Plus } from "lucide-react";
 import Link from "next/link";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface IFormValues {
   user_name: string;
@@ -14,6 +15,8 @@ interface IFormValues {
 }
 
 export default function UsersContainer() {
+  const { user } = useAuth();
+  const isAdmin = user?.role === "ADMIN";
   const [users, setUsers] = useState<IUser[]>([]);
   const [editingUser, setEditingUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(true);
