@@ -1,6 +1,6 @@
 import "../globals.css";
 import { Montserrat } from "next/font/google";
-import SearchContextProvider from "@/contexts/SearchContext";
+import SearchContextProvider from "@/contexts/searchContext";
 import Nav from "./Nav";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
