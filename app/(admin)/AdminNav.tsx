@@ -1,63 +1,128 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import { FilePlus2, Home, Users } from "lucide-react";
+import { LayoutDashboard, FileText, Tag, Users, UserPlus } from "lucide-react";
+import useAuth from "@/hooks/useAuth";
 
 export default function AdminNav() {
+  const { user } = useAuth();
+  const isAdmin = user?.role === "ADMIN";
+
   return (
-    <div className="bg-light-black fixed w-full bottom-0 h-20 md:h-full md:w-auto">
-      <div className="flex md:flex-col items-start justify-center w-full h-full">
-        <div className="p-4">
+    <div className="bg-light-black fixed w-full bottom-0 h-20 md:h-full md:w-64 z-50 border-r border-gray-800">
+      <div className="flex md:flex-col h-full">
+        {/* Logo */}
+        <div className="hidden md:block p-6 border-b border-gray-800">
           <Link
-            className="block w-fit"
+            className="block"
             title="lar fraterno de cambinda"
-            href={"/"}
+            href={"/admin"}
           >
-            <div className="w-fit flex flex-col items-center justify-center">
+            <div className="flex items-center gap-3">
               <Image
                 alt="logo"
-                width={200}
-                height={200}
+                width={48}
+                height={48}
                 src={"/images/larFraternoIconBlack.png"}
-                className="logo w-9 md:w-12 sm:w-16 "
+                className="rounded-lg"
                 priority
               />
-              <p className="text-[10px] md:text-xs max-w-[100px] text-center font-semibold leading-none text-white">
-                Lar Fraterno de Cambinda
-              </p>
+              <div>
+                <p className="text-white font-semibold text-sm leading-tight">
+                  Lar Fraterno
+                </p>
+                <p className="text-gray-400 text-xs">
+                  {isAdmin ? "Admin" : "Editor"}
+                </p>
+              </div>
             </div>
           </Link>
         </div>
 
-        <div className="flex-1 flex justify-center items-center w-full h-full">
-          <ul className="text-white w-full h-full md:h-auto flex items-center justify-center md:block">
-            <li className="h-full md:h-auto">
-              <a
-                title="Home"
-                className="h-full hover:bg-white hover:bg-opacity-5 flex items-center justify-center px-4 md:px-0 md:py-4"
+        {/* Navigation */}
+        <nav className="flex-1 flex md:flex-col w-full">
+          <ul className="flex md:flex-col w-full md:p-3 md:space-y-1">
+            <li className="flex-1 md:flex-none">
+              <Link
                 href="/admin"
+                className="flex items-center gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
+                title="Dashboard"
               >
-                <Home strokeWidth={1.5} />
-              </a>
+                <LayoutDashboard className="w-5 h-5" strokeWidth={1.5} />
+                <span className="hidden md:block text-sm font-medium">Dashboard</span>
+              </Link>
             </li>
-            <li className="h-full md:h-auto">
-              <a
-                title="Novo Post"
-                className="h-full hover:bg-white hover:bg-opacity-5 flex items-center justify-center px-4 md:px-0 md:py-4"
+            
+            <li className="flex-1 md:flex-none">
+              <Link
                 href="/admin/add-new-post"
+                className="flex items-center gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
+                title="Publicações"
               >
-                <FilePlus2 strokeWidth={1.5} />
-              </a>
+                <FileText className="w-5 h-5" strokeWidth={1.5} />
+                <span className="hidden md:block text-sm font-medium">Publicações</span>
+              </Link>
             </li>
-            <li className="h-full md:h-auto">
-              <a
-                title="Usuários"
-                className="h-full hover:bg-white hover:bg-opacity-5 flex items-center justify-center px-4 md:px-0 md:py-4"
-                href="/admin/users"
+
+            <li className="flex-1 md:flex-none">
+              <Link
+                href="/admin/categories"
+                className="flex items-center gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
+                title="Categorias"
               >
-                <Users strokeWidth={1.5} />
-              </a>
+                <Tag className="w-5 h-5" strokeWidth={1.5} />
+                <span className="hidden md:block text-sm font-medium">Categorias</span>
+              </Link>
             </li>
+
+            {isAdmin && (
+              <>
+                <li className="hidden md:block">
+                  <div className="px-4 py-2 mt-4 mb-2">
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      Usuários
+                    </p>
+                  </div>
+                </li>
+
+                <li className="flex-1 md:flex-none">
+                  <Link
+                    href="/admin/users"
+                    className="flex items-center gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
+                    title="Gerenciar Usuários"
+                  >
+                    <Users className="w-5 h-5" strokeWidth={1.5} />
+                    <span className="hidden md:block text-sm font-medium">Gerenciar</span>
+                  </Link>
+                </li>
+
+                <li className="flex-1 md:flex-none">
+                  <Link
+                    href="/admin/users/new"
+                    className="flex items-center gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
+                    title="Novo Usuário"
+                  >
+                    <UserPlus className="w-5 h-5" strokeWidth={1.5} />
+                    <span className="hidden md:block text-sm font-medium">Novo Usuário</span>
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
+        </nav>
+
+        {/* Mobile Logo */}
+        <div className="md:hidden flex items-center justify-center px-4">
+          <Link href="/admin">
+            <Image
+              alt="logo"
+              width={40}
+              height={40}
+              src={"/images/larFraternoIconBlack.png"}
+              className="rounded-lg"
+              priority
+            />
+          </Link>
         </div>
       </div>
     </div>

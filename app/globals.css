@@ -78,16 +78,27 @@
 
 :root{
   --black: #272932;
-  --background: #f5e5fc;  
-  --secondary: #9d69a3;
-  --violet: #D6BFD5
+  --background: #f7f0fb;
+  --secondary: #8b5a96;
+  --violet: #e8d5f0;
+  --warm: #fdf6ff;
 }
 
 body {
   min-height: 100vh;
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom,var(--violet), var(--background));
+  color: var(--black);
+  background-color: var(--warm);
 }
+
+/* Tipografia suave */
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+}
+
+/* Scrollbar discreta */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d8b4e2; border-radius: 3px; }
 
 
 
