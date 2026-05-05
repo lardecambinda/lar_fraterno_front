@@ -72,16 +72,19 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
 
 :root{
   --black: #272932;
-  --background: #f7f0fb;
+  --background: #ffffff;
   --secondary: #8b5a96;
   --violet: #e8d5f0;
-  --warm: #fdf6ff;
+  --warm: #fafafa;
 }
 
 body {

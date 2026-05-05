@@ -38,8 +38,8 @@ const books = [
 
 function Card({ book }: { book: typeof books[0] }) {
   return (
-    <div className="px-2">
-      <div className="bg-white border border-[var(--violet)] rounded-2xl p-5 h-full flex flex-col gap-3 hover:shadow-md transition-shadow">
+    <div className="px-2 h-full">
+      <div className="bg-white border border-[var(--violet)] rounded-2xl p-5 h-full min-h-[200px] flex flex-col gap-3 hover:shadow-md transition-shadow">
         <div className="flex items-start justify-between gap-2">
           <h3 className="text-sm font-bold text-[var(--black)] leading-snug">{book.title}</h3>
           <span className="text-xs text-[var(--secondary)] font-medium shrink-0 mt-0.5">{book.year}</span>
@@ -64,15 +64,28 @@ export default function Carousel() {
     speed: 400,
     slidesToShow: 4,
     slidesToScroll: 1,
+    adaptiveHeight: false,
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 3 } },
-      { breakpoint: 640, settings: { slidesToShow: 2 } },
-      { breakpoint: 480, settings: { slidesToShow: 1 } },
+      { breakpoint: 1024, settings: { slidesToShow: 3, adaptiveHeight: false } },
+      { breakpoint: 640, settings: { slidesToShow: 2, adaptiveHeight: false } },
+      { breakpoint: 480, settings: { slidesToShow: 1, adaptiveHeight: false } },
     ],
   };
 
   return (
     <div className="pb-8">
+      <style jsx global>{`
+        .slick-track {
+          display: flex !important;
+          align-items: stretch !important;
+        }
+        .slick-slide {
+          height: inherit !important;
+        }
+        .slick-slide > div {
+          height: 100%;
+        }
+      `}</style>
       <Slider {...settings}>
         {books.map((book, i) => <Card key={i} book={book} />)}
       </Slider>
