@@ -6,10 +6,11 @@ import {
   updateUser,
   deleteUser,
   toggleUserStatus,
+  generatePasswordResetToken,
 } from "@/services/apolloAPI";
 import { IUser } from "@/types/types";
 import { toast } from "react-toastify";
-import { Pencil, Trash2, UserCheck, UserX, Loader2, Plus } from "lucide-react";
+import { Pencil, Trash2, UserCheck, UserX, Loader2, Plus, Key, Copy, Check, X } from "lucide-react";
 import Link from "next/link";
 import useAuth from "@/hooks/useAuth";
 
@@ -25,6 +26,8 @@ export default function UsersContainer() {
   const [users, setUsers] = useState<IUser[]>([]);
   const [editingUser, setEditingUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const [resetModalData, setResetModalData] = useState<{ user: IUser; url: string } | null>(null);
+  const [copied, setCopied] = useState(false);
   const {
     register,
     handleSubmit,
@@ -32,6 +35,35 @@ export default function UsersContainer() {
     reset,
     setValue,
   } = useForm<IFormValues>();
+
+  const handleGenerateResetLink = async (targetUser: IUser) => {
+    const res = await generatePasswordResetToken(targetUser.id);
+    if (res?.token) {
+      const url = `${window.location.origin}/reset-password?token=${res.token}`;
+      setResetModalData({ user: targetUser, url });
+      setCopied(false);
+    }
+  };
+
+  const handleCopyLink = async () => {
+    if (!resetModalData) return;
+    try {
+      await navigator.clipboard.writeText(resetModalData.url);
+      setCopied(true);
+      toast("Link copiado para a área de transferência", {
+        type: "success",
+        theme: "light",
+        hideProgressBar: true,
+      });
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast("Erro ao copiar link", {
+        type: "error",
+        theme: "light",
+        hideProgressBar: true,
+      });
+    }
+  };
 
   useEffect(() => {
     loadUsers();
@@ -260,6 +292,13 @@ export default function UsersContainer() {
                       <td className="px-6 py-4 text-sm text-right">
                         <div className="flex items-center justify-end gap-2">
                           <button
+                            onClick={() => handleGenerateResetLink(user)}
+                            className="inline-flex items-center gap-1 text-purple-600 hover:text-purple-800 transition-colors"
+                            title="Gerar link de redefinição de senha"
+                          >
+                            <Key className="w-4 h-4" />
+                          </button>
+                          <button
                             onClick={() => handleEdit(user)}
                             className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 transition-colors"
                             title="Editar"
@@ -300,6 +339,54 @@ export default function UsersContainer() {
           </div>
         )}
       </div>
+
+      {resetModalData && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-white rounded-xl shadow-xl max-w-lg w-full p-6 space-y-4 border border-gray-100 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between border-b pb-3">
+              <div className="flex items-center gap-2 text-purple-700 font-semibold text-lg">
+                <Key className="w-5 h-5 text-purple-600" />
+                Link de Redefinição de Senha
+              </div>
+              <button
+                onClick={() => setResetModalData(null)}
+                className="text-gray-400 hover:text-gray-600 rounded-lg p-1 hover:bg-gray-100 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <p className="text-sm text-gray-600">
+              Gerado para <strong className="text-gray-900">{resetModalData.user.user_name}</strong> ({resetModalData.user.email}). Este link expira em <span className="font-semibold text-purple-700">15 minutos</span> e pode ser usado apenas 1 vez.
+            </p>
+
+            <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg p-2.5">
+              <input
+                type="text"
+                readOnly
+                value={resetModalData.url}
+                className="bg-transparent text-xs text-gray-700 flex-1 outline-none font-mono"
+              />
+              <button
+                onClick={handleCopyLink}
+                className="inline-flex items-center gap-1.5 bg-purple-600 hover:bg-purple-700 text-white text-xs px-3 py-1.5 rounded-md font-medium transition-colors"
+              >
+                {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? "Copiado!" : "Copiar"}
+              </button>
+            </div>
+
+            <div className="pt-2 flex justify-end">
+              <button
+                onClick={() => setResetModalData(null)}
+                className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-md text-sm font-medium transition-colors"
+              >
+                Fechar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
