@@ -20,8 +20,6 @@ Este projeto usa GitHub Actions para CI/CD e Render para hospedagem.
    - Adicione as seguintes variáveis:
      ```
      NEXT_PUBLIC_API_BASE_ROUTE=https://seu-apollo-api.onrender.com
-     NEXT_PUBLIC_SUPABASE_URL=sua_supabase_project_url
-     NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_supabase_anon_key
      NODE_ENV=production
      ```
 
@@ -36,8 +34,6 @@ Este projeto usa GitHub Actions para CI/CD e Render para hospedagem.
    - Vá em Settings → Secrets and variables → Actions
    - Adicione os secrets:
      - `RENDER_DEPLOY_HOOK_URL`: Cole a URL do Deploy Hook do Render
-     - `NEXT_PUBLIC_API_BASE_ROUTE`: URL da API no Render
-     - `NEXT_PUBLIC_SUPABASE_URL`: URL do projeto Supabase
      - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Chave anônima do Supabase
 
 2. **Testar o Pipeline**

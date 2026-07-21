@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { IPost, IUser } from "@/types/types";
 import PostsContainer from "./PostsContainer";
 import { getPosts, getUsers, getCategories } from "@/services/apolloAPI";
-import { Users, File, Tag, UserPlus, FilePlus2, Loader2 } from "lucide-react";
+import { Users, File, Tag, UserPlus, FilePlus2, Loader2, Mic } from "lucide-react";
 import Link from "next/link";
 
 export default function page() {
@@ -103,6 +103,21 @@ export default function page() {
               <div>
                 <p className="font-medium text-gray-900">Categorias</p>
                 <p className="text-xs text-gray-500">Gerenciar</p>
+              </div>
+            </div>
+          </Link>
+
+          <Link 
+            href="/admin/transcriptions"
+            className="group bg-white border border-gray-200 rounded-lg p-4 hover:border-purple-500 hover:shadow-md transition-all"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-600 transition-colors">
+                <Mic className="w-5 h-5 text-purple-600 group-hover:text-white transition-colors" />
+              </div>
+              <div>
+                <p className="font-medium text-gray-900">Transcrições</p>
+                <p className="text-xs text-gray-500">Transcrever áudio</p>
               </div>
             </div>
           </Link>

@@ -55,3 +55,22 @@ export interface IFile {
   fileDate: string;
   fileCategory: number;
 }
+
+export interface ITranscription {
+  id: string;
+  filename: string;
+  originalName: string;
+  fileSize: number;
+  mimeType: string;
+  status: "PENDING" | "IN_PROGRESS" | "COMPLETED" | "ERROR" | "CANCELLED";
+  progress: number;
+  text: string | null;
+  errorMessage: string | null;
+  retryCount: number;
+  audioUrl: string;
+  user_id: string;
+  createdAt: string;
+  updatedAt: string;
+  completedAt: string | null;
+  users: { id: string; user_name: string } | null;
+}

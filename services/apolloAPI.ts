@@ -1,4 +1,4 @@
-import { ICreatePost, ILoginData } from "@/types/types";
+import { ICreatePost, ILoginData, ITranscription } from "@/types/types";
 import { api } from "./apolloAPIConfig";
 import { toast } from "react-toastify";
 
@@ -193,6 +193,78 @@ export const deleteCategory = async (id: string) => {
       toast(msg, { theme: "light", type: "error", hideProgressBar: true });
     } catch {
       toast("Erro ao remover categoria", { theme: "light", type: "error", hideProgressBar: true });
+    }
+    return false;
+  }
+};
+
+export const uploadAudio = async (file: File): Promise<ITranscription | null> => {
+  const formData = new FormData();
+  formData.append("audio", file);
+  try {
+    const { data } = await api.post("/transcription/upload", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    toast("Áudio enviado com sucesso", { theme: "light", type: "default", hideProgressBar: true });
+    return data as ITranscription;
+  } catch (error: any) {
+    try {
+      const msg = JSON.parse(error.request?.response || "{}").error_message ?? "Erro ao enviar áudio";
+      toast(msg, { theme: "light", type: "error", hideProgressBar: true });
+    } catch {
+      toast("Erro ao enviar áudio", { theme: "light", type: "error", hideProgressBar: true });
+    }
+    return null;
+  }
+};
+
+export const getTranscriptions = async (): Promise<ITranscription[]> => {
+  try {
+    const { data } = await api.get("/transcription/list");
+    return data as ITranscription[];
+  } catch (error: any) {
+    toast("Erro ao carregar transcrições", { theme: "light", type: "error", hideProgressBar: true });
+    return [];
+  }
+};
+
+export const getTranscription = async (id: string): Promise<ITranscription | null> => {
+  try {
+    const { data } = await api.get(`/transcription/${id}`);
+    return data as ITranscription;
+  } catch (error: any) {
+    toast("Erro ao carregar transcrição", { theme: "light", type: "error", hideProgressBar: true });
+    return null;
+  }
+};
+
+export const cancelTranscription = async (id: string): Promise<boolean> => {
+  try {
+    await api.delete(`/transcription/${id}/cancel`);
+    toast("Transcrição cancelada", { theme: "light", type: "default", hideProgressBar: true });
+    return true;
+  } catch (error: any) {
+    try {
+      const msg = JSON.parse(error.request?.response || "{}").error_message ?? "Erro ao cancelar transcrição";
+      toast(msg, { theme: "light", type: "error", hideProgressBar: true });
+    } catch {
+      toast("Erro ao cancelar transcrição", { theme: "light", type: "error", hideProgressBar: true });
+    }
+    return false;
+  }
+};
+
+export const deleteTranscription = async (id: string): Promise<boolean> => {
+  try {
+    await api.delete(`/transcription/${id}`);
+    toast("Transcrição removida", { theme: "light", type: "default", hideProgressBar: true });
+    return true;
+  } catch (error: any) {
+    try {
+      const msg = JSON.parse(error.request?.response || "{}").error_message ?? "Erro ao remover transcrição";
+      toast(msg, { theme: "light", type: "error", hideProgressBar: true });
+    } catch {
+      toast("Erro ao remover transcrição", { theme: "light", type: "error", hideProgressBar: true });
     }
     return false;
   }

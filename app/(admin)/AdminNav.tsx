@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { LayoutDashboard, FileText, Tag, Users, UserPlus } from "lucide-react";
+import { LayoutDashboard, FileText, Tag, Users, UserPlus, Mic } from "lucide-react";
 import useAuth from "@/hooks/useAuth";
 
 export default function AdminNav() {
@@ -72,6 +72,17 @@ export default function AdminNav() {
               >
                 <Tag className="w-5 h-5" strokeWidth={1.5} />
                 <span className="hidden md:block text-sm font-medium">Categorias</span>
+              </Link>
+            </li>
+
+            <li className="flex-1 md:flex-none">
+              <Link
+                href="/admin/transcriptions"
+                className="flex items-center gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
+                title="Transcrições"
+              >
+                <Mic className="w-5 h-5" strokeWidth={1.5} />
+                <span className="hidden md:block text-sm font-medium">Transcrições</span>
               </Link>
             </li>
 
