@@ -46,7 +46,7 @@ export default function TranscriptionDetail({
       transcription.status === "PENDING" ||
       transcription.status === "IN_PROGRESS"
     ) {
-      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_ROUTE || "http://localhost:3333";
+      const baseUrl = (process.env.NEXT_PUBLIC_API_BASE_ROUTE || "http://localhost:3333").replace(/\/$/, "");
       const { "lar-fraterno_token": token } = parseCookies();
       const tokenQuery = token ? `?token=${token}` : "";
       const es = new EventSource(`${baseUrl}/transcription/${transcription.id}/progress${tokenQuery}`);

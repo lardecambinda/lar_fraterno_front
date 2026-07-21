@@ -2,7 +2,7 @@ import axios from "axios";
 import { parseCookies } from "nookies";
 
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_ROUTE,
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_ROUTE?.replace(/\/$/, ""),
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
