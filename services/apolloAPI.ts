@@ -269,3 +269,48 @@ export const deleteTranscription = async (id: string): Promise<boolean> => {
     return false;
   }
 };
+
+export const generatePasswordResetToken = async (userId: string): Promise<{ token: string; expires_at: string } | null> => {
+  try {
+    const { data } = await api.post(`/user/${userId}/reset-password-token`);
+    return data;
+  } catch (error: any) {
+    try {
+      const msg = JSON.parse(error.request?.response || "{}").error_message ?? "Erro ao gerar link de redefinição";
+      toast(msg, { theme: "light", type: "error", hideProgressBar: true });
+    } catch {
+      toast("Erro ao gerar link de redefinição", { theme: "light", type: "error", hideProgressBar: true });
+    }
+    return null;
+  }
+};
+
+export const validatePasswordResetToken = async (token: string): Promise<{ valid: boolean; email?: string; user_name?: string; error_message?: string }> => {
+  try {
+    const { data } = await api.get("/auth/validate-reset-token", { params: { token } });
+    return data;
+  } catch (error: any) {
+    try {
+      const data = JSON.parse(error.request?.response || "{}");
+      return { valid: false, error_message: data.error_message || "Link de redefinição inválido" };
+    } catch {
+      return { valid: false, error_message: "Link de redefinição inválido" };
+    }
+  }
+};
+
+export const resetPassword = async (token: string, new_password: string): Promise<boolean> => {
+  try {
+    await api.post("/auth/reset-password", { token, new_password });
+    return true;
+  } catch (error: any) {
+    try {
+      const msg = JSON.parse(error.request?.response || "{}").error_message ?? "Erro ao redefinir senha";
+      toast(msg, { theme: "light", type: "error", hideProgressBar: true });
+    } catch {
+      toast("Erro ao redefinir senha", { theme: "light", type: "error", hideProgressBar: true });
+    }
+    return false;
+  }
+};
+
