@@ -26,7 +26,7 @@ export default function Searchbar() {
   return (
     <form
       onSubmit={(e) => handleSubmit(e)}
-      className="bg-white flex items-center w-full lg:max-w-xs rounded-sm overflow-hidden h-10 py-0 px-3 "
+      className="bg-white border-b flex items-center w-full lg:max-w-xs rounded-sm overflow-hidden h-10 py-0 px-3 "
     >
       <input
         placeholder="buscar..."

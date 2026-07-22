@@ -14,7 +14,8 @@ export default function Home() {
             Lar Fraterno de Cambinda
           </h1>
           <p className="text-base sm:text-lg text-gray-600 mb-8 leading-relaxed max-w-xl mx-auto">
-            Um espaço de acolhimento, estudo e prática dos ensinamentos espíritas, pautado no amor, caridade e fraternidade.
+            Um espaço de estudo e prática dos ensinamentos espíritas, pautado no
+            amor, caridade e fraternidade.
           </p>
           <Link
             href="/reunioes"
@@ -65,8 +66,8 @@ export default function Home() {
           </h2>
           <div className="text-gray-600 leading-relaxed text-base sm:text-lg">
             <p>
-              O Lar Fraterno de Cambinda é um espaço de acolhimento, estudo e prática
-              dos ensinamentos espíritas.
+              O Lar Fraterno de Cambinda é um espaço de estudo e prática dos
+              ensinamentos espíritas.
             </p>
           </div>
         </div>
@@ -76,7 +77,8 @@ export default function Home() {
       <footer className="border-t border-[var(--violet)] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center">
           <p className="text-sm text-gray-600">
-            © {new Date().getFullYear()} Lar Fraterno de Cambinda. Todos os direitos reservados.
+            © {new Date().getFullYear()} Lar Fraterno de Cambinda. Todos os
+            direitos reservados.
           </p>
         </div>
       </footer>
