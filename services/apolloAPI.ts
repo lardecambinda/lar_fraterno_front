@@ -1,7 +1,6 @@
 import { ICreatePost, ILoginData, ITranscription } from "@/types/types";
 import { api } from "./apolloAPIConfig";
 import { toast } from "react-toastify";
-import { upload } from "@vercel/blob/client";
 import { parseCookies } from "nookies";
 
 export const getUsers = async () => {
@@ -201,44 +200,22 @@ export const deleteCategory = async (id: string) => {
 };
 
 export const uploadAudio = async (file: File): Promise<ITranscription | null> => {
+  const formData = new FormData();
+  formData.append("audio", file);
   try {
-    const baseUrl = (process.env.NEXT_PUBLIC_API_BASE_ROUTE || "http://localhost:3333").replace(/\/$/, "");
-    const { "lar-fraterno_token": token } = parseCookies();
-    const tokenQuery = token ? `?token=${token}` : "";
-
-    const blob = await upload(file.name, file, {
-      access: 'private',
-      handleUploadUrl: `${baseUrl}/transcription/upload-token${tokenQuery}`,
+    const { data } = await api.post("/transcription/upload", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
     });
-
-    const { data } = await api.post("/transcription/create", {
-      originalName: file.name,
-      fileSize: file.size,
-      mimeType: file.type,
-      audioUrl: blob.url,
-    });
-
     toast("Áudio enviado com sucesso", { theme: "light", type: "default", hideProgressBar: true });
     return data as ITranscription;
-  } catch (clientErr: any) {
-    console.warn("Client upload fallback to server upload:", clientErr);
-    const formData = new FormData();
-    formData.append("audio", file);
+  } catch (error: any) {
     try {
-      const { data } = await api.post("/transcription/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      toast("Áudio enviado com sucesso", { theme: "light", type: "default", hideProgressBar: true });
-      return data as ITranscription;
-    } catch (error: any) {
-      try {
-        const msg = JSON.parse(error.request?.response || "{}").error_message ?? "Erro ao enviar áudio";
-        toast(msg, { theme: "light", type: "error", hideProgressBar: true });
-      } catch {
-        toast("Erro ao enviar áudio", { theme: "light", type: "error", hideProgressBar: true });
-      }
-      return null;
+      const msg = JSON.parse(error.request?.response || "{}").error_message ?? "Erro ao enviar áudio";
+      toast(msg, { theme: "light", type: "error", hideProgressBar: true });
+    } catch {
+      toast("Erro ao enviar áudio", { theme: "light", type: "error", hideProgressBar: true });
     }
+    return null;
   }
 };
 
