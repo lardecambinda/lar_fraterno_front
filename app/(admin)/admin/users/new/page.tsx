@@ -6,8 +6,8 @@ import SubmitButton from "@/components/SubmitButton/SubmitButton";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { UserPlus, ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 interface IFormValues {
   user_name: string;
@@ -66,6 +66,12 @@ export default function NewUserPage() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
+      <button
+        onClick={() => router.back()}
+        className="flex items-center gap-1 text-sm text-gray-500 hover:text-[var(--secondary)] w-fit mb-4"
+      >
+        <ArrowLeft size={16} /> Voltar
+      </button>
       <div className="flex items-center gap-3">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Novo Usuário</h1>

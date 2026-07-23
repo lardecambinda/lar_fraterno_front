@@ -1,7 +1,14 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { LayoutDashboard, FileText, Tag, Users, UserPlus, Mic } from "lucide-react";
+import {
+  LayoutDashboard,
+  FileText,
+  Tag,
+  Users,
+  UserPlus,
+  Mic,
+} from "lucide-react";
 import useAuth from "@/hooks/useAuth";
 
 export default function AdminNav() {
@@ -24,7 +31,7 @@ export default function AdminNav() {
                 width={48}
                 height={48}
                 src={"/images/larFraternoIconBlack.png"}
-                className="rounded-lg"
+                className="rounded-lg logo"
                 priority
               />
               <div>
@@ -42,47 +49,55 @@ export default function AdminNav() {
         {/* Navigation */}
         <nav className="flex-1 flex md:flex-col w-full">
           <ul className="flex md:flex-col w-full md:p-3 md:space-y-1">
-            <li className="flex-1 md:flex-none">
+            <li className="flex-1 flex items-center justify-center md:flex-none">
               <Link
                 href="/admin"
-                className="flex items-center gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
+                className="flex w-full items-center justify-center md:justify-start gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
                 title="Dashboard"
               >
                 <LayoutDashboard className="w-5 h-5" strokeWidth={1.5} />
-                <span className="hidden md:block text-sm font-medium">Dashboard</span>
+                <span className="hidden md:block text-sm font-medium">
+                  Dashboard
+                </span>
               </Link>
             </li>
-            
-            <li className="flex-1 md:flex-none">
+
+            <li className="flex-1 flex items-center justify-center md:flex-none">
               <Link
-                href="/admin/add-new-post"
-                className="flex items-center gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
+                href="/admin/posts"
+                className="flex w-full items-center justify-center md:justify-start gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
                 title="Publicações"
               >
                 <FileText className="w-5 h-5" strokeWidth={1.5} />
-                <span className="hidden md:block text-sm font-medium">Publicações</span>
+                <span className="hidden md:block text-sm font-medium">
+                  Publicações
+                </span>
               </Link>
             </li>
 
-            <li className="flex-1 md:flex-none">
+            <li className="flex-1 flex items-center justify-center md:flex-none">
               <Link
                 href="/admin/categories"
-                className="flex items-center gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
+                className="flex w-full items-center justify-center md:justify-start gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
                 title="Categorias"
               >
                 <Tag className="w-5 h-5" strokeWidth={1.5} />
-                <span className="hidden md:block text-sm font-medium">Categorias</span>
+                <span className="hidden md:block text-sm font-medium">
+                  Categorias
+                </span>
               </Link>
             </li>
 
-            <li className="flex-1 md:flex-none">
+            <li className="flex-1 flex items-center justify-center md:flex-none">
               <Link
                 href="/admin/transcriptions"
-                className="flex items-center gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
+                className="flex w-full items-center justify-center md:justify-start gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
                 title="Transcrições"
               >
                 <Mic className="w-5 h-5" strokeWidth={1.5} />
-                <span className="hidden md:block text-sm font-medium">Transcrições</span>
+                <span className="hidden md:block text-sm font-medium">
+                  Transcrições
+                </span>
               </Link>
             </li>
 
@@ -96,25 +111,29 @@ export default function AdminNav() {
                   </div>
                 </li>
 
-                <li className="flex-1 md:flex-none">
+                <li className="flex-1 flex items-center justify-center md:flex-none">
                   <Link
                     href="/admin/users"
-                    className="flex items-center gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
+                    className="flex w-full items-center justify-center md:justify-start gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
                     title="Gerenciar Usuários"
                   >
                     <Users className="w-5 h-5" strokeWidth={1.5} />
-                    <span className="hidden md:block text-sm font-medium">Gerenciar</span>
+                    <span className="hidden md:block text-sm font-medium">
+                      Gerenciar
+                    </span>
                   </Link>
                 </li>
 
-                <li className="flex-1 md:flex-none">
+                <li className="flex-1 flex items-center justify-center md:flex-none">
                   <Link
                     href="/admin/users/new"
-                    className="flex items-center gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
+                    className="flex w-full items-center justify-center md:justify-start gap-3 px-4 md:px-4 py-4 md:py-3 text-gray-300 hover:text-white hover:bg-white/5 md:rounded-lg transition-all group"
                     title="Novo Usuário"
                   >
                     <UserPlus className="w-5 h-5" strokeWidth={1.5} />
-                    <span className="hidden md:block text-sm font-medium">Novo Usuário</span>
+                    <span className="hidden md:block text-sm font-medium">
+                      Novo Usuário
+                    </span>
                   </Link>
                 </li>
               </>
@@ -130,7 +149,7 @@ export default function AdminNav() {
               width={40}
               height={40}
               src={"/images/larFraternoIconBlack.png"}
-              className="rounded-lg"
+              className="rounded-lg logo"
               priority
             />
           </Link>

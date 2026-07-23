@@ -9,6 +9,7 @@ import { Files, Pencil, Trash2, X } from "lucide-react";
 interface IProps {
   posts: IPost[] | undefined;
   onRefresh: () => void;
+  showTitle?: boolean;
 }
 
 const MONTHS = [
@@ -40,7 +41,11 @@ const CATEGORIES = [
 const currentYear = new Date().getFullYear();
 const YEARS = Array.from({ length: 6 }, (_, i) => currentYear - i);
 
-export default function PostsContainer({ posts, onRefresh }: IProps) {
+export default function PostsContainer({
+  posts,
+  onRefresh,
+  showTitle = true,
+}: IProps) {
   const [filterMonth, setFilterMonth] = useState("");
   const [filterYear, setFilterYear] = useState("");
   const [filterTag, setFilterTag] = useState("");
@@ -108,12 +113,14 @@ export default function PostsContainer({ posts, onRefresh }: IProps) {
 
   return (
     <div className="w-full">
-      <div className="flex items-center mb-4 gap-2">
-        <div className="p-2 bg-violet rounded-full">
-          <Files strokeWidth={1.5} color="#272932" />
+      {showTitle && (
+        <div className="flex items-center mb-4 gap-2">
+          <div className="p-2 bg-purple-100 rounded-full">
+            <Files strokeWidth={1.5} color="#9333EA" />
+          </div>
+          <h2 className="font-semibold text-lg">Todas as Reuniões</h2>
         </div>
-        <h2 className="font-semibold text-lg">Todas as</h2>
-      </div>
+      )}
 
       {/* Filtros */}
       <div className="flex flex-wrap gap-2 mb-4">
