@@ -5,7 +5,15 @@ import { useCallback, useEffect, useState } from "react";
 import { IPost, IUser } from "@/types/types";
 import PostsContainer from "./PostsContainer";
 import { getPosts, getUsers, getCategories } from "@/services/apolloAPI";
-import { Users, File, Tag, UserPlus, FilePlus2, Loader2, Mic } from "lucide-react";
+import {
+  Users,
+  File,
+  Tag,
+  UserPlus,
+  FilePlus2,
+  Loader2,
+  Mic,
+} from "lucide-react";
 import Link from "next/link";
 
 export default function page() {
@@ -20,7 +28,7 @@ export default function page() {
         const allPosts = data as IPost[];
         // Se for EDITOR, mostrar apenas seus próprios posts
         if (user?.role === "EDITOR") {
-          setPosts(allPosts.filter(post => post.user_id === user.id));
+          setPosts(allPosts.filter((post) => post.user_id === user.id));
         } else {
           setPosts(allPosts);
         }
@@ -63,21 +71,37 @@ export default function page() {
     <div className="pb-[100px] md:pb-0 space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-sm text-gray-600 mt-1">Bem-vindo, {user?.user_name}</p>
+        <p className="text-sm text-gray-600 mt-1">
+          Bem-vindo, {user?.user_name}
+        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Infocard title="Publicações" number={posts?.length} Icon={<File strokeWidth={1.5} color="#272932" />} />
-        <Infocard title="Categorias" number={categories.length} Icon={<Tag strokeWidth={1.5} color="#272932" />} />
+        <Infocard
+          title="Publicações"
+          number={posts?.length}
+          Icon={<File strokeWidth={1.5} color="#9333EA" />}
+        />
+        <Infocard
+          title="Categorias"
+          number={categories.length}
+          Icon={<Tag strokeWidth={1.5} color="#9333EA" />}
+        />
         {user?.role === "ADMIN" && (
-          <Infocard title="Usuários" number={users?.length} Icon={<Users strokeWidth={1.5} color="#272932" />} />
+          <Infocard
+            title="Usuários"
+            number={users?.length}
+            Icon={<Users strokeWidth={1.5} color="#9333EA" />}
+          />
         )}
       </div>
 
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-3">Acesso Rápido</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-3">
+          Acesso Rápido
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <Link 
+          <Link
             href="/admin/add-new-post"
             className="group bg-white border border-gray-200 rounded-lg p-4 hover:border-blue-500 hover:shadow-md transition-all"
           >
@@ -92,7 +116,7 @@ export default function page() {
             </div>
           </Link>
 
-          <Link 
+          <Link
             href="/admin/categories"
             className="group bg-white border border-gray-200 rounded-lg p-4 hover:border-orange-500 hover:shadow-md transition-all"
           >
@@ -107,7 +131,7 @@ export default function page() {
             </div>
           </Link>
 
-          <Link 
+          <Link
             href="/admin/transcriptions"
             className="group bg-white border border-gray-200 rounded-lg p-4 hover:border-purple-500 hover:shadow-md transition-all"
           >
@@ -124,7 +148,7 @@ export default function page() {
 
           {user?.role === "ADMIN" && (
             <>
-              <Link 
+              <Link
                 href="/admin/users/new"
                 className="group bg-white border border-gray-200 rounded-lg p-4 hover:border-green-500 hover:shadow-md transition-all"
               >
@@ -139,7 +163,7 @@ export default function page() {
                 </div>
               </Link>
 
-              <Link 
+              <Link
                 href="/admin/users"
                 className="group bg-white border border-gray-200 rounded-lg p-4 hover:border-purple-500 hover:shadow-md transition-all"
               >

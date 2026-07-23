@@ -10,7 +10,7 @@ export default function Infocard({ title, number, Icon }: Props) {
     <div className="p-4 rounded-md shadow-md bg-white flex-1">
       <div>
         <div className="flex items-center gap-2 mb-4">
-          <div className="text-xl p-2 rounded-full flex items-center justify-center bg-violet">
+          <div className="text-xl p-2 rounded-full flex items-center justify-center bg-purple-100 ">
             {Icon}
           </div>
           <p className="text-xl font-semibold ">{title}</p>
